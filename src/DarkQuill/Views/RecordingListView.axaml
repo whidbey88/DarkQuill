@@ -1,0 +1,243 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DarkQuill.ViewModels"
+             xmlns:models="using:DarkQuill.Models"
+             xmlns:converters="using:DarkQuill.Converters"
+             x:Class="DarkQuill.Views.RecordingListView"
+             x:DataType="vm:RecordingListViewModel">
+
+  <UserControl.Resources>
+    <converters:TranscriptionStatusToBrushConverter x:Key="StatusToBrushConverter" />
+    <converters:StringsEqualMultiConverter x:Key="StringsEqualMultiConverter" />
+    <converters:TranscriptionStatusToPendingConverter x:Key="StatusToPendingConverter" />
+    <converters:TranscriptionStatusToBackgroundConverter x:Key="StatusToBackgroundConverter" />
+  </UserControl.Resources>
+
+  <DockPanel>
+
+    <!-- Header -->
+    <StackPanel DockPanel.Dock="Top" Margin="0,0,0,16">
+      <TextBlock Classes="TitleMedium"
+                 FontWeight="Bold"
+                 Text="Recordings"
+                 Foreground="{DynamicResource OnSurfaceBrush}" />
+      <TextBlock Classes="LabelSmall"
+                 Foreground="{DynamicResource OnSurfaceDimBrush}"
+                 Margin="0,4,0,0">
+        <TextBlock.Text>
+          <MultiBinding StringFormat="{}{0} recordings">
+            <Binding Path="TotalRecordingCount" />
+          </MultiBinding>
+        </TextBlock.Text>
+      </TextBlock>
+    </StackPanel>
+
+    <!-- Toolbar: Batch Actions -->
+    <StackPanel DockPanel.Dock="Top" Margin="0,0,0,16">
+      <Button Classes="Secondary"
+              Command="{Binding TranscribeSelectedCommand}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center">
+        <Button.Content>
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Text="Transcribe Selected" VerticalAlignment="Center" />
+            <TextBlock VerticalAlignment="Center"
+                       Foreground="{DynamicResource OnSurfaceDimBrush}">
+              <TextBlock.Text>
+                <MultiBinding StringFormat="({0})">
+                  <Binding Path="SelectedRecordings.Count" />
+                </MultiBinding>
+              </TextBlock.Text>
+            </TextBlock>
+          </StackPanel>
+        </Button.Content>
+      </Button>
+    </StackPanel>
+
+    <!-- Loading Indicator -->
+    <StackPanel DockPanel.Dock="Top"
+                IsVisible="{Binding IsLoading}"
+                HorizontalAlignment="Center"
+                Margin="0,24,0,0">
+      <TextBlock Classes="BodyMedium"
+                 Text="Loading recordings..."
+                 Foreground="{DynamicResource OnSurfaceDimBrush}" />
+    </StackPanel>
+
+    <!-- Error Message -->
+    <TextBlock DockPanel.Dock="Top"
+               Classes="BodySmall"
+               Text="{Binding StatusMessage}"
+               Foreground="{DynamicResource ErrorBrush}"
+               IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+               Margin="0,8,0,0"
+               TextWrapping="Wrap" />
+
+    <!-- Open Folder Button (pinned below scroll, aligned with right panel buttons) -->
+    <Button DockPanel.Dock="Bottom"
+            Classes="Tertiary"
+            Command="{Binding OpenRecordingsFolderCommand}"
+            HorizontalContentAlignment="Center"
+            Margin="0,8,0,0">
+      <TextBlock Text="Open Recordings Folder" />
+    </Button>
+
+    <!-- Scrollable Recordings List -->
+    <ScrollViewer>
+      <ItemsControl ItemsSource="{Binding Recordings}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <!-- Day Group -->
+            <StackPanel Margin="0,0,0,12">
+
+              <!-- Group Header -->
+              <Border Classes="DayGroupHeader">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                  <!-- Expand/Collapse Toggle -->
+                  <ToggleButton Grid.Column="0"
+                                IsChecked="{Binding IsExpanded}"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="4"
+                                VerticalAlignment="Center"
+                                Cursor="Hand">
+                    <Panel>
+                      <TextBlock Text="&#x25B6;"
+                                 FontSize="10"
+                                 Foreground="{DynamicResource OnSurfaceDimBrush}"
+                                 IsVisible="{Binding !IsExpanded}"
+                                 VerticalAlignment="Center" />
+                      <TextBlock Text="&#x25BC;"
+                                 FontSize="10"
+                                 Foreground="{DynamicResource OnSurfaceDimBrush}"
+                                 IsVisible="{Binding IsExpanded}"
+                                 VerticalAlignment="Center" />
+                    </Panel>
+                  </ToggleButton>
+
+                  <!-- Date Label and Count -->
+                  <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                              Margin="8,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Classes="LabelMedium"
+                               Text="{Binding FormattedDate}"
+                               Foreground="{DynamicResource OnSurfaceVariantBrush}" />
+                    <TextBlock Classes="LabelSmall"
+                               Foreground="{DynamicResource OnSurfaceDimBrush}"
+                               VerticalAlignment="Center">
+                      <TextBlock.Text>
+                        <MultiBinding StringFormat="({0})">
+                          <Binding Path="Items.Count" />
+                        </MultiBinding>
+                      </TextBlock.Text>
+                    </TextBlock>
+                  </StackPanel>
+
+                  <!-- Delete Group Button -->
+                  <Button Grid.Column="2"
+                          Classes="IconButton"
+                          Command="{Binding $parent[ItemsControl].((vm:RecordingListViewModel)DataContext).DeleteDayGroupCommand}"
+                          CommandParameter="{Binding}"
+                          ToolTip.Tip="Delete all recordings in this group">
+                    <TextBlock Text="&#x274C;" Opacity="0.7" FontSize="24" />
+                  </Button>
+                </Grid>
+              </Border>
+
+              <!-- Group Items (collapsible) -->
+              <ItemsControl ItemsSource="{Binding Items}"
+                            IsVisible="{Binding IsExpanded}"
+                            Margin="0,4,0,0">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <!-- Recording Item (darker background when transcription is complete) -->
+                    <Border Classes="RecordingItem"
+                            Name="RecordingItemBorder"
+                            Tag="{Binding}"
+                            Background="{Binding TranscriptionStatus, Converter={StaticResource StatusToBackgroundConverter}}">
+                      <StackPanel Spacing="4">
+
+                        <!-- Filename (full width, with right padding for breathing room) -->
+                        <TextBlock Classes="BodyMedium"
+                                   Text="{Binding FileName}"
+                                   Foreground="{DynamicResource OnSurfaceBrush}"
+                                   TextTrimming="CharacterEllipsis"
+                                   Margin="0,0,16,0" />
+
+                        <!-- Second row: duration on left, action buttons on right -->
+                        <DockPanel>
+                          <!-- Action Buttons (right side) -->
+                          <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                      VerticalAlignment="Center">
+                            <!-- Transcribe Button (hidden once complete; Panel reserves space for alignment) -->
+                            <Panel Width="32">
+                              <Button Classes="IconButton"
+                                      Command="{Binding $parent[ItemsControl;1].((vm:RecordingListViewModel)DataContext).TranscribeSingleCommand}"
+                                      CommandParameter="{Binding}"
+                                      ToolTip.Tip="Transcribe"
+                                      VerticalAlignment="Center"
+                                      IsVisible="{Binding TranscriptionStatus, Converter={StaticResource StatusToPendingConverter}}">
+                                <TextBlock Text="&#x270F;" FontSize="20"
+                                           Foreground="{DynamicResource PrimaryBrush}" />
+                              </Button>
+                            </Panel>
+
+                            <!-- Play/Stop Button -->
+                            <Panel>
+                              <Button Classes="IconButton"
+                                      Command="{Binding $parent[ItemsControl;1].((vm:RecordingListViewModel)DataContext).PlayRecordingCommand}"
+                                      CommandParameter="{Binding}"
+                                      ToolTip.Tip="Play recording">
+                                <Button.IsVisible>
+                                  <MultiBinding Converter="{StaticResource StringsEqualMultiConverter}"
+                                                ConverterParameter="negate">
+                                    <Binding Path="FileName" />
+                                    <Binding Path="$parent[ItemsControl;1].((vm:RecordingListViewModel)DataContext).CurrentlyPlayingFileName" />
+                                  </MultiBinding>
+                                </Button.IsVisible>
+                                <TextBlock Text="&#x25B6;" FontSize="20"
+                                           Foreground="{DynamicResource PrimaryBrush}" />
+                              </Button>
+                              <Button Classes="IconButton"
+                                      Command="{Binding $parent[ItemsControl;1].((vm:RecordingListViewModel)DataContext).StopPlaybackCommand}"
+                                      ToolTip.Tip="Stop playback">
+                                <Button.IsVisible>
+                                  <MultiBinding Converter="{StaticResource StringsEqualMultiConverter}">
+                                    <Binding Path="FileName" />
+                                    <Binding Path="$parent[ItemsControl;1].((vm:RecordingListViewModel)DataContext).CurrentlyPlayingFileName" />
+                                  </MultiBinding>
+                                </Button.IsVisible>
+                                <TextBlock Text="&#x23F9;" FontSize="20"
+                                           Foreground="{DynamicResource ErrorBrush}" />
+                              </Button>
+                            </Panel>
+
+                            <!-- Delete Button -->
+                            <Button Classes="IconButton"
+                                    Command="{Binding $parent[ItemsControl;1].((vm:RecordingListViewModel)DataContext).DeleteSingleCommand}"
+                                    CommandParameter="{Binding}"
+                                    ToolTip.Tip="Delete recording"
+                                    VerticalAlignment="Center">
+                              <TextBlock Text="&#x274C;" Opacity="0.7" FontSize="18" />
+                            </Button>
+                          </StackPanel>
+
+                          <!-- Duration (left side, takes remaining space; hidden when zero) -->
+                          <TextBlock Classes="LabelSmall"
+                                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                                     VerticalAlignment="Center"
+                                     IsVisible="{Binding Duration.TotalSeconds}"
+                                     Text="{Binding Duration, StringFormat='Duration: {0:mm\\:ss}'}" />
+                        </DockPanel>
+
+                      </StackPanel>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="using:DarkQuill.Converters"
+             xmlns:controls="using:DarkQuill.Controls"
+             x:Class="DarkQuill.Controls.AudioLevelMeter"
+             x:Name="Root"
+             x:DataType="controls:AudioLevelMeter">
+  <UserControl.Resources>
+    <conv:LevelToWidthConverter x:Key="LevelToWidthConverter" />
+    <conv:AudioLevelToBrushConverter x:Key="AudioLevelToBrushConverter" />
+  </UserControl.Resources>
+
+  <ProgressBar Classes="VUMeter"
+               Height="4"
+               CornerRadius="2"
+               Margin="0,8"
+               Minimum="0"
+               Maximum="100"
+               Value="{Binding #Root.Level, Converter={StaticResource LevelToWidthConverter}}"
+               Foreground="{Binding #Root.Level, Converter={StaticResource AudioLevelToBrushConverter}}" />
+</UserControl>

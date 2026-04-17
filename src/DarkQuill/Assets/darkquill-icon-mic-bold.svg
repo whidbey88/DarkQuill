@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9f6fbf"/>
+      <stop offset="100%" stop-color="#1a0033"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Purple background rounded square -->
+  <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="url(#bgGrad)"/>
+
+  <!-- Large microphone body - fills most of the space -->
+  <rect x="176" y="60" width="160" height="280" rx="80" ry="80" fill="#fcf8fe"/>
+
+  <!-- Mic highlight streak -->
+  <rect x="208" y="96" width="20" height="180" rx="10" ry="10" fill="white" opacity="0.35"/>
+
+  <!-- Mic stand arc -->
+  <path d="M 128 300 Q 128 420 256 420 Q 384 420 384 300"
+        fill="none" stroke="#fcf8fe" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- Mic stand vertical -->
+  <line x1="256" y1="420" x2="256" y2="465"
+        stroke="#fcf8fe" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- Mic stand base -->
+  <line x1="192" y1="465" x2="320" y2="465"
+        stroke="#fcf8fe" stroke-width="24" stroke-linecap="round"/>
+</svg>

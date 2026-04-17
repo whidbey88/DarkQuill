@@ -1,0 +1,279 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DarkQuill.ViewModels"
+        x:Class="DarkQuill.Views.ProjectDialog"
+        x:DataType="vm:ProjectDialogViewModel"
+        Title="Project Selection"
+        Width="520"
+        Height="480"
+        MinWidth="420"
+        MinHeight="400"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        ExtendClientAreaToDecorationsHint="False"
+        Background="{DynamicResource SurfaceLowestBrush}">
+
+  <!-- Override font sizes to original values for this dialog -->
+  <Window.Resources>
+    <x:Double x:Key="HeadlineMediumFontSize">28</x:Double>
+    <x:Double x:Key="HeadlineMediumLineHeight">36</x:Double>
+    <x:Double x:Key="TitleSmallFontSize">16</x:Double>
+    <x:Double x:Key="TitleSmallLineHeight">22</x:Double>
+    <x:Double x:Key="BodyMediumFontSize">14</x:Double>
+    <x:Double x:Key="BodyMediumLineHeight">22.4</x:Double>
+    <x:Double x:Key="BodySmallFontSize">12</x:Double>
+    <x:Double x:Key="BodySmallLineHeight">19.2</x:Double>
+    <x:Double x:Key="LabelMediumFontSize">12</x:Double>
+    <x:Double x:Key="LabelMediumLineHeight">16</x:Double>
+    <x:Double x:Key="LabelSmallFontSize">11</x:Double>
+    <x:Double x:Key="LabelSmallLineHeight">16</x:Double>
+  </Window.Resources>
+
+  <Window.Styles>
+    <!-- Remove default ListBoxItem background on hover/select; let the inner Border handle it -->
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- Hover: show primary container background on the tile Border -->
+    <Style Selector="ListBoxItem:pointerover Border.ProjectTile">
+      <Setter Property="Background" Value="{DynamicResource PrimaryContainerBrush}" />
+    </Style>
+    <!-- Selected: keep primary container background -->
+    <Style Selector="ListBoxItem:selected Border.ProjectTile">
+      <Setter Property="Background" Value="{DynamicResource PrimaryContainerBrush}" />
+    </Style>
+
+    <!-- All buttons in this dialog: pink hover state -->
+    <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource PrimaryContainerBrush}" />
+    </Style>
+  </Window.Styles>
+
+  <!-- Semi-transparent outer border for glass effect -->
+  <Border Background="{DynamicResource SurfaceContainerHighestBrush}"
+          CornerRadius="{DynamicResource CornerRadiusXl}"
+          Margin="24"
+          Padding="24,20">
+    <DockPanel>
+
+      <!-- Dialog Title -->
+      <TextBlock DockPanel.Dock="Top"
+                 Classes="HeadlineMedium"
+                 Text="Project Selection"
+                 Foreground="{DynamicResource OnSurfaceBrush}"
+                 Margin="0,0,0,20" />
+
+      <!-- Error Message (shown when ErrorMessage is not empty) -->
+      <Border DockPanel.Dock="Top"
+              Background="{DynamicResource ErrorContainerBrush}"
+              CornerRadius="{DynamicResource CornerRadiusSm}"
+              Padding="12,8"
+              Margin="0,0,0,12"
+              IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+        <TextBlock Classes="BodySmall"
+                   Text="{Binding ErrorMessage}"
+                   Foreground="{DynamicResource ErrorBrush}"
+                   TextWrapping="Wrap" />
+      </Border>
+
+      <!-- Tab Bar -->
+      <StackPanel DockPanel.Dock="Top"
+                  Orientation="Horizontal"
+                  Spacing="4"
+                  Margin="0,0,0,20">
+        <!-- Select Tab -->
+        <Button Classes="Secondary"
+                Content="Today's Projects"
+                Command="{Binding SwitchTabCommand}"
+                CommandParameter="Select"
+                Opacity="{Binding ActiveTab, Converter={x:Static StringConverters.IsNotNullOrEmpty}, FallbackValue=1}" />
+        <!-- New Tab -->
+        <Button Classes="Secondary"
+                Content="New Project"
+                Command="{Binding SwitchTabCommand}"
+                CommandParameter="New" />
+        <!-- Load Tab -->
+        <Button Classes="Secondary"
+                Content="Load Previous"
+                Command="{Binding SwitchTabCommand}"
+                CommandParameter="Load" />
+      </StackPanel>
+
+      <!-- Loading Indicator -->
+      <Border DockPanel.Dock="Top"
+              IsVisible="{Binding IsLoading}"
+              Margin="0,0,0,8">
+        <TextBlock Classes="BodyMedium"
+                   Text="Loading projects..."
+                   Foreground="{DynamicResource OnSurfaceDimBrush}"
+                   HorizontalAlignment="Center" />
+      </Border>
+
+      <!-- Bottom Buttons (always visible) -->
+      <StackPanel DockPanel.Dock="Bottom"
+                  Orientation="Horizontal"
+                  HorizontalAlignment="Right"
+                  Spacing="12"
+                  Margin="0,16,0,0">
+        <Button Classes="Secondary"
+                Content="Cancel"
+                Command="{Binding CancelCommand}" />
+      </StackPanel>
+
+      <!-- Tab Content Area -->
+      <Grid>
+
+        <!-- Select Existing Project Tab -->
+        <DockPanel IsVisible="{Binding ActiveTab, Converter={StaticResource StringEqualConverter}, ConverterParameter=Select}">
+          <Button DockPanel.Dock="Bottom"
+                  Classes="Primary"
+                  Content="Select Project"
+                  Command="{Binding SelectExistingProjectCommand}"
+                  CommandParameter="{Binding SelectedExistingProject}"
+                  IsEnabled="{Binding SelectedExistingProject, Converter={x:Static ObjectConverters.IsNotNull}}"
+                  HorizontalAlignment="Stretch"
+                  Margin="0,12,0,0" />
+
+          <TextBlock DockPanel.Dock="Top"
+                     Classes="LabelMedium"
+                     Text="SELECT A PROJECT FROM TODAY"
+                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                     Margin="0,0,0,8" />
+
+          <ListBox ItemsSource="{Binding ExistingProjects}"
+                   SelectedItem="{Binding SelectedExistingProject}"
+                   Background="Transparent"
+                   BorderThickness="0"
+                   DoubleTapped="OnExistingProjectDoubleTapped">
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+              </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Border Classes="ProjectTile"
+                        Background="{DynamicResource SurfaceContainerHighBrush}"
+                        CornerRadius="{DynamicResource CornerRadiusMd}"
+                        Padding="16,12"
+                        Margin="0,0,8,8"
+                        MinWidth="120">
+                  <StackPanel>
+                    <TextBlock Classes="TitleSmall"
+                               Text="{Binding Name}"
+                               Foreground="{DynamicResource OnSurfaceBrush}" />
+                    <TextBlock Classes="LabelSmall"
+                               Text="{Binding LastModifiedDate, StringFormat='Last modified: {0:HH:mm}'}"
+                               Foreground="{DynamicResource OnSurfaceDimBrush}" />
+                  </StackPanel>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+
+          <!-- Empty state for no existing projects -->
+          <TextBlock IsVisible="{Binding !ExistingProjects.Count}"
+                     Classes="BodyMedium"
+                     Text="No projects found for today"
+                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center" />
+        </DockPanel>
+
+        <!-- Create New Project Tab -->
+        <DockPanel IsVisible="{Binding ActiveTab, Converter={StaticResource StringEqualConverter}, ConverterParameter=New}">
+          <Button DockPanel.Dock="Bottom"
+                  Classes="Primary"
+                  Content="Create Project"
+                  Command="{Binding CreateNewProjectCommand}"
+                  HorizontalAlignment="Stretch"
+                  Margin="0,12,0,0" />
+
+          <StackPanel Spacing="12">
+            <TextBlock Classes="LabelMedium"
+                       Text="PROJECT NAME"
+                       Foreground="{DynamicResource OnSurfaceDimBrush}" />
+
+            <TextBox Classes="TextInput"
+                     Text="{Binding NewProjectName, Mode=TwoWay}"
+                     Watermark="Enter project name..."
+                     MinHeight="44" />
+
+            <TextBlock Classes="BodySmall"
+                       Text="Name will be normalized: lowercase, spaces replaced with hyphens."
+                       Foreground="{DynamicResource OnSurfaceDimBrush}" />
+          </StackPanel>
+        </DockPanel>
+
+        <!-- Load Previous Project Tab -->
+        <DockPanel IsVisible="{Binding ActiveTab, Converter={StaticResource StringEqualConverter}, ConverterParameter=Load}">
+          <Button DockPanel.Dock="Bottom"
+                  Classes="Primary"
+                  Content="Load Project"
+                  Command="{Binding LoadPreviousProjectCommand}"
+                  CommandParameter="{Binding SelectedAllProject}"
+                  IsEnabled="{Binding SelectedAllProject, Converter={x:Static ObjectConverters.IsNotNull}}"
+                  HorizontalAlignment="Stretch"
+                  Margin="0,12,0,0" />
+
+          <TextBlock DockPanel.Dock="Top"
+                     Classes="LabelMedium"
+                     Text="SELECT A PREVIOUS PROJECT"
+                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                     Margin="0,0,0,8" />
+
+          <ListBox ItemsSource="{Binding AllProjects}"
+                   SelectedItem="{Binding SelectedAllProject}"
+                   Background="Transparent"
+                   BorderThickness="0"
+                   DoubleTapped="OnPreviousProjectDoubleTapped">
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+              </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Border Classes="ProjectTile"
+                        Background="{DynamicResource SurfaceContainerHighBrush}"
+                        CornerRadius="{DynamicResource CornerRadiusMd}"
+                        Padding="16,12"
+                        Margin="0,0,8,8"
+                        MinWidth="120">
+                  <StackPanel>
+                    <TextBlock Classes="TitleSmall"
+                               Text="{Binding Name}"
+                               Foreground="{DynamicResource OnSurfaceBrush}" />
+                    <TextBlock Classes="LabelSmall"
+                               Text="{Binding CreatedDate, StringFormat='Created: {0:MMMM d, yyyy}'}"
+                               Foreground="{DynamicResource OnSurfaceDimBrush}" />
+                  </StackPanel>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+
+          <!-- Empty state for no previous projects -->
+          <TextBlock IsVisible="{Binding !AllProjects.Count}"
+                     Classes="BodyMedium"
+                     Text="No previous projects found"
+                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center" />
+        </DockPanel>
+
+      </Grid>
+
+    </DockPanel>
+  </Border>
+
+</Window>

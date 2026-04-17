@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DarkQuill.ViewModels"
+        x:Class="DarkQuill.Views.SettingsDialog"
+        x:DataType="vm:SettingsViewModel"
+        Title="Settings"
+        Width="600"
+        Height="500"
+        Background="{DynamicResource SurfaceContainerBrush}">
+
+  <!-- Override font sizes to original values for this dialog -->
+  <Window.Resources>
+    <x:Double x:Key="HeadlineMediumFontSize">28</x:Double>
+    <x:Double x:Key="HeadlineMediumLineHeight">36</x:Double>
+    <x:Double x:Key="TitleSmallFontSize">16</x:Double>
+    <x:Double x:Key="TitleSmallLineHeight">22</x:Double>
+    <x:Double x:Key="TitleMediumFontSize">18</x:Double>
+    <x:Double x:Key="TitleMediumLineHeight">24</x:Double>
+    <x:Double x:Key="BodyLargeFontSize">16</x:Double>
+    <x:Double x:Key="BodyLargeLineHeight">25.6</x:Double>
+    <x:Double x:Key="BodyMediumFontSize">14</x:Double>
+    <x:Double x:Key="BodyMediumLineHeight">22.4</x:Double>
+    <x:Double x:Key="BodySmallFontSize">12</x:Double>
+    <x:Double x:Key="BodySmallLineHeight">19.2</x:Double>
+    <x:Double x:Key="LabelLargeFontSize">14</x:Double>
+    <x:Double x:Key="LabelLargeLineHeight">20</x:Double>
+    <x:Double x:Key="LabelMediumFontSize">12</x:Double>
+    <x:Double x:Key="LabelMediumLineHeight">16</x:Double>
+    <x:Double x:Key="LabelSmallFontSize">11</x:Double>
+    <x:Double x:Key="LabelSmallLineHeight">16</x:Double>
+  </Window.Resources>
+
+</Window>

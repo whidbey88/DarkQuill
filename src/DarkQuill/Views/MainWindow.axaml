@@ -1,0 +1,86 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DarkQuill.ViewModels"
+        xmlns:views="using:DarkQuill.Views"
+        x:Class="DarkQuill.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="DarkQuill"
+        Icon="/Assets/Icons/darkquill.ico"
+        Width="1200"
+        Height="800"
+        MinWidth="800"
+        MinHeight="600"
+        Background="{DynamicResource SurfaceBrush}">
+
+  <!-- Two-Column Layout -->
+  <Grid ColumnDefinitions="320,*">
+
+    <!-- Left Panel: Recordings List -->
+    <Border Grid.Column="0"
+            Background="{DynamicResource SurfaceContainerLowBrush}"
+            Padding="16,16,16,24">
+      <views:RecordingListView DataContext="{Binding RecordingListViewModel}" />
+    </Border>
+
+    <!-- Right Panel: Main Content Area -->
+    <Border Grid.Column="1"
+            Background="{DynamicResource SurfaceBrush}"
+            Padding="32,24">
+      <DockPanel>
+
+        <!-- Header Section -->
+        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,32">
+          <Grid ColumnDefinitions="*,Auto">
+            <!-- Project Name -->
+            <TextBlock Grid.Column="0"
+                       Classes="HeadlineMedium"
+                       Text="{Binding CurrentProject, FallbackValue=DarkQuill}"
+                       Foreground="{DynamicResource OnSurfaceBrush}"
+                       VerticalAlignment="Center" />
+
+            <!-- Action Buttons -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12"
+                        VerticalAlignment="Center">
+              <Button Classes="Secondary"
+                      Content="Export"
+                      Command="{Binding ExportCommand}"
+                      ToolTip.Tip="Export transcriptions to Markdown" />
+              <Button Classes="Secondary"
+                      Content="New Session"
+                      Command="{Binding NewSessionCommand}" />
+            </StackPanel>
+          </Grid>
+
+        </StackPanel>
+
+        <!-- Recording Control Panel -->
+        <Border DockPanel.Dock="Top"
+                Classes="Card"
+                Margin="0,0,0,24">
+          <views:RecordingControlView DataContext="{Binding RecordingControlViewModel}" />
+        </Border>
+
+        <!-- Transcription Status Bar (visible during transcription) -->
+        <Border DockPanel.Dock="Top"
+                IsVisible="{Binding IsTranscribing}"
+                Background="{DynamicResource SurfaceContainerHighBrush}"
+                CornerRadius="8"
+                Padding="16,12"
+                Margin="0,0,0,16">
+          <StackPanel Orientation="Horizontal" Spacing="12">
+            <TextBlock Classes="LabelMedium"
+                       Text="{Binding TranscriptionStatusText}"
+                       Foreground="{DynamicResource SecondaryBrush}"
+                       VerticalAlignment="Center" />
+          </StackPanel>
+        </Border>
+
+        <!-- Transcription List Area -->
+        <views:TranscriptionListView DataContext="{Binding TranscriptionListViewModel}" />
+
+      </DockPanel>
+    </Border>
+
+  </Grid>
+
+</Window>

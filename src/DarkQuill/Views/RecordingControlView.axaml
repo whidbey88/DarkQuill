@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DarkQuill.ViewModels"
+             xmlns:controls="using:DarkQuill.Controls"
+             x:Class="DarkQuill.Views.RecordingControlView"
+             x:DataType="vm:RecordingControlViewModel">
+
+  <StackPanel Spacing="12">
+
+    <!-- Header Label -->
+    <TextBlock Classes="TitleSmall"
+               Text="Recording Controls"
+               Foreground="{DynamicResource OnSurfaceVariantBrush}" />
+
+    <!-- Button Row -->
+    <Grid ColumnDefinitions="Auto,*,Auto">
+
+      <!-- Record Button (visible when idle) -->
+      <Button Grid.Column="0"
+              Classes="Primary"
+              Content="Record"
+              Command="{Binding StartRecordingCommand}"
+              IsVisible="{Binding !IsRecording}"
+              VerticalAlignment="Center" />
+
+      <!-- Stop Button (visible when recording) -->
+      <Button Grid.Column="0"
+              Classes="Secondary"
+              Content="Stop"
+              Command="{Binding StopRecordingCommand}"
+              IsVisible="{Binding IsRecording}"
+              VerticalAlignment="Center" />
+
+      <!-- VU Meter -->
+      <StackPanel Grid.Column="1"
+                  VerticalAlignment="Center"
+                  Margin="24,0"
+                  IsVisible="{Binding IsRecording}">
+        <controls:AudioLevelMeter Level="{Binding AudioLevel}" />
+      </StackPanel>
+
+      <!-- Settings Button -->
+      <Button Grid.Column="2"
+              Classes="Tertiary"
+              Content="Settings"
+              Command="{Binding OpenAudioSettingsCommand}"
+              VerticalAlignment="Center" />
+    </Grid>
+
+    <!-- Timer Row (visible only when recording) -->
+    <StackPanel Orientation="Horizontal"
+                Spacing="16"
+                IsVisible="{Binding IsRecording}">
+      <TextBlock Classes="LabelMedium"
+                 Text="Duration:"
+                 Foreground="{DynamicResource OnSurfaceVariantBrush}"
+                 VerticalAlignment="Center" />
+      <TextBlock Classes="BodyMedium"
+                 Text="{Binding ElapsedTimeFormatted}"
+                 Foreground="{DynamicResource PrimaryContainerBrush}"
+                 VerticalAlignment="Center" />
+    </StackPanel>
+
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,129 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Display Styles (Manrope Bold) -->
+  <Style Selector="TextBlock.DisplayLarge">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeBoldFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource DisplayLargeFontSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LineHeight" Value="{DynamicResource DisplayLargeLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.DisplayMedium">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeBoldFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource DisplayMediumFontSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LineHeight" Value="{DynamicResource DisplayMediumLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.DisplaySmall">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeBoldFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource DisplaySmallFontSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LineHeight" Value="{DynamicResource DisplaySmallLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <!-- Headline Styles (Manrope Bold) -->
+  <Style Selector="TextBlock.HeadlineLarge">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeBoldFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource HeadlineLargeFontSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LineHeight" Value="{DynamicResource HeadlineLargeLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.HeadlineMedium">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeBoldFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource HeadlineMediumFontSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LineHeight" Value="{DynamicResource HeadlineMediumLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.HeadlineSmall">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeBoldFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource HeadlineSmallFontSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LineHeight" Value="{DynamicResource HeadlineSmallLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <!-- Title Styles (Manrope Medium) -->
+  <Style Selector="TextBlock.TitleLarge">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource TitleLargeFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="{DynamicResource TitleLargeLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.TitleMedium">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource TitleMediumFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="{DynamicResource TitleMediumLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.TitleSmall">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource TitleSmallFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="{DynamicResource TitleSmallLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <!-- Body Styles (Manrope Regular) -->
+  <Style Selector="TextBlock.BodyLarge">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodyLargeFontSize}" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LineHeight" Value="{DynamicResource BodyLargeLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.BodyMedium">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodyMediumFontSize}" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LineHeight" Value="{DynamicResource BodyMediumLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.BodySmall">
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodySmallFontSize}" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LineHeight" Value="{DynamicResource BodySmallLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceVariantBrush}" />
+  </Style>
+
+  <!-- Label Styles (Inter Medium) -->
+  <Style Selector="TextBlock.LabelLarge">
+    <Setter Property="FontFamily" Value="{DynamicResource InterFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource LabelLargeFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="{DynamicResource LabelLargeLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceVariantBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.LabelMedium">
+    <Setter Property="FontFamily" Value="{DynamicResource InterFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource LabelMediumFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="{DynamicResource LabelMediumLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceVariantBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.LabelSmall">
+    <Setter Property="FontFamily" Value="{DynamicResource InterFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource LabelSmallFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="{DynamicResource LabelSmallLineHeight}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceDimBrush}" />
+  </Style>
+
+</Styles>

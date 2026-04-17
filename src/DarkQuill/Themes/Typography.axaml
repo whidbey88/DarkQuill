@@ -1,0 +1,81 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Font Families
+       Manrope and Inter font files expected in Assets/Fonts/.
+       Avalonia.Fonts.Inter package provides Inter as a fallback.
+       If Manrope TTF files are missing, Segoe UI is used as system fallback. -->
+  <FontFamily x:Key="ManropeFontFamily">avares://DarkQuill/Assets/Fonts/Manrope-Regular.ttf#Manrope, Segoe UI, sans-serif</FontFamily>
+  <FontFamily x:Key="ManropeBoldFontFamily">avares://DarkQuill/Assets/Fonts/Manrope-Bold.ttf#Manrope, Segoe UI, sans-serif</FontFamily>
+  <FontFamily x:Key="InterFontFamily">avares://DarkQuill/Assets/Fonts/Inter-Regular.ttf#Inter, Inter, Segoe UI, sans-serif</FontFamily>
+
+  <!-- Font Weights -->
+  <FontWeight x:Key="WeightRegular">Regular</FontWeight>
+  <FontWeight x:Key="WeightMedium">Medium</FontWeight>
+  <FontWeight x:Key="WeightSemiBold">SemiBold</FontWeight>
+  <FontWeight x:Key="WeightBold">Bold</FontWeight>
+
+  <!-- Display Large (Manrope, 80px, Bold) — scaled ~40% -->
+  <x:Double x:Key="DisplayLargeFontSize">80</x:Double>
+  <x:Double x:Key="DisplayLargeLineHeight">90</x:Double>
+  <x:Double x:Key="DisplayLargeLetterSpacing">-1.6</x:Double>
+
+  <!-- Display Medium (Manrope, 63px, Bold) — scaled ~40% -->
+  <x:Double x:Key="DisplayMediumFontSize">63</x:Double>
+  <x:Double x:Key="DisplayMediumLineHeight">73</x:Double>
+  <x:Double x:Key="DisplayMediumLetterSpacing">-1.26</x:Double>
+
+  <!-- Display Small (Manrope, 50px, Bold) — scaled ~40% -->
+  <x:Double x:Key="DisplaySmallFontSize">50</x:Double>
+  <x:Double x:Key="DisplaySmallLineHeight">62</x:Double>
+  <x:Double x:Key="DisplaySmallLetterSpacing">-1.0</x:Double>
+
+  <!-- Headline Large (Manrope, 45px, Bold) — scaled ~40% -->
+  <x:Double x:Key="HeadlineLargeFontSize">45</x:Double>
+  <x:Double x:Key="HeadlineLargeLineHeight">56</x:Double>
+
+  <!-- Headline Medium (Manrope, 39px, Bold) — scaled ~40% -->
+  <x:Double x:Key="HeadlineMediumFontSize">39</x:Double>
+  <x:Double x:Key="HeadlineMediumLineHeight">50</x:Double>
+
+  <!-- Headline Small (Manrope, 34px, Bold) — scaled ~40% -->
+  <x:Double x:Key="HeadlineSmallFontSize">34</x:Double>
+  <x:Double x:Key="HeadlineSmallLineHeight">45</x:Double>
+
+  <!-- Title Large (Manrope, 31px, Medium) — scaled ~40% -->
+  <x:Double x:Key="TitleLargeFontSize">31</x:Double>
+  <x:Double x:Key="TitleLargeLineHeight">39</x:Double>
+
+  <!-- Title Medium (Manrope, 25px, Medium) — scaled ~40% -->
+  <x:Double x:Key="TitleMediumFontSize">25</x:Double>
+  <x:Double x:Key="TitleMediumLineHeight">34</x:Double>
+
+  <!-- Title Small (Manrope, 22px, Medium) — scaled ~40% -->
+  <x:Double x:Key="TitleSmallFontSize">22</x:Double>
+  <x:Double x:Key="TitleSmallLineHeight">31</x:Double>
+
+  <!-- Body Large (Manrope, 20px, Regular) — scaled ~25% (transcription text) -->
+  <x:Double x:Key="BodyLargeFontSize">20</x:Double>
+  <x:Double x:Key="BodyLargeLineHeight">32</x:Double>
+
+  <!-- Body Medium (Manrope, 20px, Regular) — scaled ~40% -->
+  <x:Double x:Key="BodyMediumFontSize">20</x:Double>
+  <x:Double x:Key="BodyMediumLineHeight">31</x:Double>
+
+  <!-- Body Small (Manrope, 17px, Regular) — scaled ~40% -->
+  <x:Double x:Key="BodySmallFontSize">17</x:Double>
+  <x:Double x:Key="BodySmallLineHeight">27</x:Double>
+
+  <!-- Label Large (Inter, 20px, Medium) — scaled ~40% -->
+  <x:Double x:Key="LabelLargeFontSize">20</x:Double>
+  <x:Double x:Key="LabelLargeLineHeight">28</x:Double>
+
+  <!-- Label Medium (Inter, 17px, Medium) — scaled ~40% -->
+  <x:Double x:Key="LabelMediumFontSize">17</x:Double>
+  <x:Double x:Key="LabelMediumLineHeight">22</x:Double>
+
+  <!-- Label Small (Inter, 15px, Medium) — scaled ~40% -->
+  <x:Double x:Key="LabelSmallFontSize">15</x:Double>
+  <x:Double x:Key="LabelSmallLineHeight">22</x:Double>
+
+</ResourceDictionary>

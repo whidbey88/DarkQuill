@@ -1,0 +1,23 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="using:DarkQuill.Converters"
+             x:Class="DarkQuill.App"
+             RequestedThemeVariant="Dark">
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://DarkQuill/Themes/Styles.axaml" />
+        <StyleInclude Source="avares://DarkQuill/Themes/TextStyles.axaml" />
+        <StyleInclude Source="avares://DarkQuill/Themes/ComponentStyles.axaml" />
+    </Application.Styles>
+    <Application.Resources>
+        <ResourceDictionary>
+            <conv:StringEqualConverter x:Key="StringEqualConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://DarkQuill/Themes/Colors.axaml" />
+                <ResourceInclude Source="avares://DarkQuill/Themes/Brushes.axaml" />
+                <ResourceInclude Source="avares://DarkQuill/Themes/Typography.axaml" />
+                <ResourceInclude Source="avares://DarkQuill/Themes/Spacing.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

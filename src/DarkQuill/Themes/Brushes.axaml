@@ -1,0 +1,61 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Surface Brushes -->
+  <SolidColorBrush x:Key="SurfaceLowestBrush" Color="{StaticResource SurfaceLowest}" />
+  <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}" />
+  <SolidColorBrush x:Key="SurfaceContainerLowBrush" Color="{StaticResource SurfaceContainerLow}" />
+  <SolidColorBrush x:Key="SurfaceContainerBrush" Color="{StaticResource SurfaceContainer}" />
+  <SolidColorBrush x:Key="SurfaceContainerHighBrush" Color="{StaticResource SurfaceContainerHigh}" />
+  <SolidColorBrush x:Key="SurfaceContainerHighDarkBrush" Color="{StaticResource SurfaceContainerHighDark}" />
+  <SolidColorBrush x:Key="SurfaceContainerHighestBrush" Color="{StaticResource SurfaceContainerHighest}" />
+  <SolidColorBrush x:Key="SurfaceBrightBrush" Color="{StaticResource SurfaceBright}" />
+
+  <!-- On-Surface Text Brushes -->
+  <SolidColorBrush x:Key="OnSurfaceBrush" Color="{StaticResource OnSurface}" />
+  <SolidColorBrush x:Key="OnSurfaceVariantBrush" Color="{StaticResource OnSurfaceVariant}" />
+  <SolidColorBrush x:Key="OnSurfaceDimBrush" Color="{StaticResource OnSurfaceDim}" />
+
+  <!-- Primary Brushes -->
+  <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+  <SolidColorBrush x:Key="PrimaryContainerBrush" Color="{StaticResource PrimaryContainer}" />
+  <SolidColorBrush x:Key="PrimaryBrightBrush" Color="{StaticResource PrimaryBright}" />
+  <SolidColorBrush x:Key="PrimaryDimBrush" Color="{StaticResource PrimaryDim}" />
+  <SolidColorBrush x:Key="OnPrimaryBrush" Color="{StaticResource OnPrimary}" />
+  <SolidColorBrush x:Key="OnPrimaryContainerBrush" Color="{StaticResource OnPrimaryContainer}" />
+
+  <!-- Secondary Brushes -->
+  <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />
+  <SolidColorBrush x:Key="SecondaryContainerBrush" Color="{StaticResource SecondaryContainer}" />
+  <SolidColorBrush x:Key="SecondaryDimBrush" Color="{StaticResource SecondaryDim}" />
+  <SolidColorBrush x:Key="OnSecondaryBrush" Color="{StaticResource OnSecondary}" />
+  <SolidColorBrush x:Key="OnSecondaryContainerBrush" Color="{StaticResource OnSecondaryContainer}" />
+
+  <!-- Tertiary Brushes -->
+  <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
+  <SolidColorBrush x:Key="TertiaryContainerBrush" Color="{StaticResource TertiaryContainer}" />
+  <SolidColorBrush x:Key="OnTertiaryBrush" Color="{StaticResource OnTertiary}" />
+  <SolidColorBrush x:Key="OnTertiaryContainerBrush" Color="{StaticResource OnTertiaryContainer}" />
+
+  <!-- Outline Brushes -->
+  <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource Outline}" />
+  <SolidColorBrush x:Key="OutlineVariantBrush" Color="{StaticResource OutlineVariant}" />
+  <SolidColorBrush x:Key="GhostBorderBrush" Color="{StaticResource OutlineGhostBorder}" Opacity="0.15" />
+
+  <!-- State Brushes -->
+  <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
+  <SolidColorBrush x:Key="ErrorContainerBrush" Color="{StaticResource ErrorContainer}" />
+  <SolidColorBrush x:Key="OnErrorBrush" Color="{StaticResource OnError}" />
+  <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}" />
+  <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}" />
+  <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource Info}" />
+
+  <!-- VU Meter Brushes -->
+  <SolidColorBrush x:Key="VULevelLowBrush" Color="{StaticResource VULevelLow}" />
+  <SolidColorBrush x:Key="VULevelMediumBrush" Color="{StaticResource VULevelMedium}" />
+  <SolidColorBrush x:Key="VULevelHighBrush" Color="{StaticResource VULevelHigh}" />
+
+  <!-- Atmospheric Shadow Tint (use for blur effects) -->
+  <SolidColorBrush x:Key="ShadowTintBrush" Color="{StaticResource Primary}" Opacity="0.08" />
+
+</ResourceDictionary>

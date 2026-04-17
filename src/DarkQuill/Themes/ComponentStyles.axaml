@@ -1,0 +1,165 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Primary Button: Purple accent, bright glow on hover (used for Record) -->
+  <Style Selector="Button.Primary">
+    <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}" />
+    <Setter Property="Padding" Value="{DynamicResource PaddingButton}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusMd}" />
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodyMediumFontSize}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="Button.Primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryBrightBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}" />
+  </Style>
+  <Style Selector="Button.Primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryDimBrush}" />
+  </Style>
+
+  <!-- Secondary Button: Tonal surface, purple text, pink hover with white text -->
+  <Style Selector="Button.Secondary">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+    <Setter Property="Padding" Value="{DynamicResource PaddingButton}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusMd}" />
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodyMediumFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="Button.Secondary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryContainerBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+  <Style Selector="Button.Secondary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryDimBrush}" />
+  </Style>
+
+  <!-- Tertiary Button: Filled at rest, purple text, pink hover with white text -->
+  <Style Selector="Button.Tertiary">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+    <Setter Property="Padding" Value="{DynamicResource PaddingButton}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusMd}" />
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodyMediumFontSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="Button.Tertiary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryContainerBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <!-- Text Input: Dark surface, ghost border on focus -->
+  <Style Selector="TextBox.TextInput">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerLowBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="FontFamily" Value="{DynamicResource ManropeFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodyMediumFontSize}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource PrimaryBrush}" />
+  </Style>
+  <Style Selector="TextBox.TextInput:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource GhostBorderBrush}" />
+  </Style>
+
+  <!-- Card: Elevated container with generous padding -->
+  <Style Selector="Border.Card">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighestBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusXl}" />
+    <Setter Property="Padding" Value="{DynamicResource PaddingCard}" />
+  </Style>
+
+  <!-- List Item: Tonal surface with hover -->
+  <Style Selector="Border.ListItem">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusMd}" />
+    <Setter Property="Padding" Value="16,12" />
+    <Setter Property="Margin" Value="{DynamicResource MarginListItem}" />
+  </Style>
+
+  <!-- Chip: Small tonal pill -->
+  <Style Selector="Border.Chip">
+    <Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusFull}" />
+    <Setter Property="Padding" Value="12,6" />
+  </Style>
+
+  <!-- VU Meter: Audio level indicator -->
+  <Style Selector="ProgressBar.VUMeter">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerLowBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource VULevelLowBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusFull}" />
+    <Setter Property="MinHeight" Value="8" />
+    <Setter Property="Minimum" Value="0" />
+    <Setter Property="Maximum" Value="100" />
+  </Style>
+
+  <!-- Status Chip: Pill-shaped status indicator -->
+  <Style Selector="Border.StatusChip">
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusFull}" />
+    <Setter Property="Padding" Value="8,4" />
+  </Style>
+
+  <!-- Recording Item: Selectable list item with hover state -->
+  <Style Selector="Border.RecordingItem">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
+    <Setter Property="Padding" Value="12" />
+    <Setter Property="Margin" Value="0,0,0,8" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+
+  <!-- Recording Item Selected state -->
+  <Style Selector="Border.RecordingItemSelected">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighestBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
+    <Setter Property="Padding" Value="12" />
+    <Setter Property="Margin" Value="0,0,0,8" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+
+  <!-- Day Group Header: Collapsible section header -->
+  <Style Selector="Border.DayGroupHeader">
+    <Setter Property="Background" Value="{DynamicResource SurfaceContainerLowBrush}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
+    <Setter Property="Padding" Value="12,8" />
+    <Setter Property="Margin" Value="0,0,0,4" />
+  </Style>
+
+  <!-- Icon Button: Small transparent button for inline actions -->
+  <Style Selector="Button.IconButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceDimBrush}" />
+    <Setter Property="Padding" Value="6" />
+    <Setter Property="MinWidth" Value="32" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="Button.IconButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryContainerBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+</Styles>

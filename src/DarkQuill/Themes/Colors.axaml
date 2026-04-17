@@ -1,0 +1,58 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Surface Colors - Base Hierarchy -->
+  <Color x:Key="SurfaceLowest">#0a0a0e</Color>
+  <Color x:Key="Surface">#0e0e12</Color>
+  <Color x:Key="SurfaceContainerLow">#131317</Color>
+  <Color x:Key="SurfaceContainer">#1a1a1e</Color>
+  <Color x:Key="SurfaceContainerHigh">#25252b</Color>
+  <Color x:Key="SurfaceContainerHighDark">#19191d</Color>
+  <Color x:Key="SurfaceContainerHighest">#2a2a30</Color>
+  <Color x:Key="SurfaceBright">#35353b</Color>
+
+  <!-- On-Surface Text Colors -->
+  <Color x:Key="OnSurface">#fcf8fe</Color>
+  <Color x:Key="OnSurfaceVariant">#cac7d0</Color>
+  <Color x:Key="OnSurfaceDim">#a8a5af</Color>
+
+  <!-- Primary Color Palette (Cool Purple) -->
+  <Color x:Key="Primary">#c799ff</Color>
+  <Color x:Key="PrimaryContainer">#bc87fe</Color>
+  <Color x:Key="PrimaryBright">#dbb8ff</Color>
+  <Color x:Key="PrimaryDim">#9f6fbf</Color>
+  <Color x:Key="OnPrimary">#1a0033</Color>
+  <Color x:Key="OnPrimaryContainer">#2d0052</Color>
+
+  <!-- Secondary Color Palette (Warm Orange - Accent) -->
+  <Color x:Key="Secondary">#fd9000</Color>
+  <Color x:Key="SecondaryContainer">#e67e00</Color>
+  <Color x:Key="SecondaryDim">#cc6600</Color>
+  <Color x:Key="OnSecondary">#0d0000</Color>
+  <Color x:Key="OnSecondaryContainer">#331a00</Color>
+
+  <!-- Tertiary Color Palette (Cyan for contrast) -->
+  <Color x:Key="Tertiary">#00d9ff</Color>
+  <Color x:Key="TertiaryContainer">#00b8d4</Color>
+  <Color x:Key="OnTertiary">#000a0d</Color>
+  <Color x:Key="OnTertiaryContainer">#001a20</Color>
+
+  <!-- Outline & Borders -->
+  <Color x:Key="Outline">#9c9aa0</Color>
+  <Color x:Key="OutlineVariant">#48474c</Color>
+  <Color x:Key="OutlineGhostBorder">#48474c</Color>
+
+  <!-- State Colors -->
+  <Color x:Key="Error">#f2b8b5</Color>
+  <Color x:Key="ErrorContainer">#8c1d18</Color>
+  <Color x:Key="OnError">#601410</Color>
+  <Color x:Key="Warning">#ffb84d</Color>
+  <Color x:Key="Success">#66bb6a</Color>
+  <Color x:Key="Info">#42a5f5</Color>
+
+  <!-- VU Meter Levels -->
+  <Color x:Key="VULevelLow">#66bb6a</Color>
+  <Color x:Key="VULevelMedium">#ffb84d</Color>
+  <Color x:Key="VULevelHigh">#f2b8b5</Color>
+
+</ResourceDictionary>

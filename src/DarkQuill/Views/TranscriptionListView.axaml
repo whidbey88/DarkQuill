@@ -1,0 +1,194 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DarkQuill.ViewModels"
+             xmlns:models="using:DarkQuill.Models"
+             x:Class="DarkQuill.Views.TranscriptionListView"
+             x:DataType="vm:TranscriptionListViewModel">
+
+  <DockPanel>
+
+    <!-- Header -->
+    <StackPanel DockPanel.Dock="Top" Margin="0,0,0,16">
+      <TextBlock Classes="TitleSmall"
+                 FontWeight="Bold"
+                 Text="Transcriptions"
+                 Foreground="{DynamicResource OnSurfaceVariantBrush}" />
+      <TextBlock Classes="LabelSmall"
+                 Foreground="{DynamicResource OnSurfaceDimBrush}"
+                 Margin="0,4,0,0">
+        <TextBlock.Text>
+          <MultiBinding StringFormat="{}{0} transcriptions">
+            <Binding Path="TotalTranscriptionCount" />
+          </MultiBinding>
+        </TextBlock.Text>
+      </TextBlock>
+    </StackPanel>
+
+    <!-- Loading Indicator -->
+    <StackPanel DockPanel.Dock="Top"
+                IsVisible="{Binding IsLoading}"
+                HorizontalAlignment="Center"
+                Margin="0,24,0,0">
+      <TextBlock Classes="BodyMedium"
+                 Text="Loading transcriptions..."
+                 Foreground="{DynamicResource OnSurfaceDimBrush}" />
+    </StackPanel>
+
+    <!-- Status Message -->
+    <TextBlock DockPanel.Dock="Top"
+               Classes="BodySmall"
+               Text="{Binding StatusMessage}"
+               Foreground="{DynamicResource OnSurfaceDimBrush}"
+               IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+               Margin="0,8,0,0"
+               TextWrapping="Wrap" />
+
+    <!-- Empty State -->
+    <TextBlock DockPanel.Dock="Top"
+               Classes="BodyMedium"
+               Text="Transcriptions will appear here after recording"
+               Foreground="{DynamicResource OnSurfaceDimBrush}"
+               HorizontalAlignment="Center"
+               Margin="0,40,0,0"
+               IsVisible="{Binding !TotalTranscriptionCount}" />
+
+    <!-- Action Buttons (pinned below scroll, aligned with left panel button) -->
+    <StackPanel DockPanel.Dock="Bottom"
+                Orientation="Horizontal"
+                Spacing="8"
+                Margin="0,8,0,0"
+                VerticalAlignment="Bottom">
+      <Button Classes="Tertiary"
+              Command="{Binding OpenTranscriptionsFolderCommand}"
+              HorizontalContentAlignment="Center">
+        <TextBlock Text="Open Transcriptions Folder" />
+      </Button>
+      <Button Classes="Tertiary"
+              Command="{Binding OpenModelSelectionCommand}"
+              HorizontalContentAlignment="Center">
+        <TextBlock Text="Whisper Model" />
+      </Button>
+    </StackPanel>
+
+    <!-- Scrollable Transcription List -->
+    <ScrollViewer>
+      <ItemsControl ItemsSource="{Binding Transcriptions}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <!-- Day Group -->
+            <StackPanel Margin="0,0,0,16">
+
+              <!-- Group Header -->
+              <Border Classes="DayGroupHeader">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                  <!-- Expand/Collapse Toggle -->
+                  <ToggleButton Grid.Column="0"
+                                IsChecked="{Binding IsExpanded}"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="4"
+                                VerticalAlignment="Center"
+                                Cursor="Hand">
+                    <Panel>
+                      <TextBlock Text="&#x25B6;"
+                                 FontSize="10"
+                                 Foreground="{DynamicResource OnSurfaceDimBrush}"
+                                 IsVisible="{Binding !IsExpanded}"
+                                 VerticalAlignment="Center" />
+                      <TextBlock Text="&#x25BC;"
+                                 FontSize="10"
+                                 Foreground="{DynamicResource OnSurfaceDimBrush}"
+                                 IsVisible="{Binding IsExpanded}"
+                                 VerticalAlignment="Center" />
+                    </Panel>
+                  </ToggleButton>
+
+                  <!-- Date Label and Count -->
+                  <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                              Margin="8,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Classes="LabelMedium"
+                               Text="{Binding FormattedDate}"
+                               Foreground="{DynamicResource OnSurfaceVariantBrush}" />
+                    <TextBlock Classes="LabelSmall"
+                               Foreground="{DynamicResource OnSurfaceDimBrush}"
+                               VerticalAlignment="Center">
+                      <TextBlock.Text>
+                        <MultiBinding StringFormat="({0})">
+                          <Binding Path="Items.Count" />
+                        </MultiBinding>
+                      </TextBlock.Text>
+                    </TextBlock>
+                  </StackPanel>
+
+                  <!-- Delete Group Button -->
+                  <Button Grid.Column="2"
+                          Classes="IconButton"
+                          Command="{Binding $parent[ItemsControl].((vm:TranscriptionListViewModel)DataContext).DeleteDayGroupCommand}"
+                          CommandParameter="{Binding}"
+                          ToolTip.Tip="Delete all transcriptions in this group">
+                    <TextBlock Text="&#x274C;" Opacity="0.7" FontSize="24" />
+                  </Button>
+                </Grid>
+              </Border>
+
+              <!-- Group Items (collapsible) -->
+              <ItemsControl ItemsSource="{Binding Items}"
+                            IsVisible="{Binding IsExpanded}"
+                            Margin="0,8,0,0">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <!-- Transcription Card -->
+                    <Border Classes="Card"
+                            Margin="0,0,0,16">
+                      <Grid ColumnDefinitions="Auto,*,Auto">
+
+                        <!-- Copy Button (left column, vertically centered) -->
+                        <Button Grid.Column="0"
+                                Classes="Tertiary"
+                                Command="{Binding $parent[ItemsControl;1].((vm:TranscriptionListViewModel)DataContext).CopyTranscriptionCommand}"
+                                CommandParameter="{Binding}"
+                                ToolTip.Tip="Copy to clipboard"
+                                VerticalAlignment="Center"
+                                Margin="0,0,12,0">
+                          <TextBlock Text="Copy" />
+                        </Button>
+
+                        <!-- Content: timestamp + transcription text -->
+                        <StackPanel Grid.Column="1" Spacing="4">
+                          <TextBlock Classes="LabelSmall"
+                                     Foreground="{DynamicResource OnSurfaceDimBrush}">
+                            <TextBlock.Text>
+                              <MultiBinding StringFormat="Recorded: {0:h:mm tt} on {0:MMM dd}">
+                                <Binding Path="Timestamp" />
+                              </MultiBinding>
+                            </TextBlock.Text>
+                          </TextBlock>
+                          <TextBlock Classes="BodyLarge"
+                                     Text="{Binding Text}"
+                                     Foreground="{DynamicResource OnSurfaceBrush}"
+                                     TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <!-- Delete Button (right column, vertically centered) -->
+                        <Button Grid.Column="2"
+                                Classes="IconButton"
+                                Command="{Binding $parent[ItemsControl;1].((vm:TranscriptionListViewModel)DataContext).DeleteTranscriptionCommand}"
+                                CommandParameter="{Binding}"
+                                ToolTip.Tip="Delete transcription"
+                                VerticalAlignment="Center"
+                                Margin="12,0,0,0">
+                          <TextBlock Text="&#x274C;" Opacity="0.7" FontSize="24" />
+                        </Button>
+
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

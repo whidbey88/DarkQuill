@@ -1,0 +1,114 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DarkQuill.ViewModels"
+        x:Class="DarkQuill.Views.ModelSelectionDialog"
+        x:DataType="vm:ModelSelectionViewModel"
+        Title="Whisper Model"
+        Width="480"
+        Height="380"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource SurfaceContainerBrush}">
+
+  <!-- Override font sizes to original values for this dialog -->
+  <Window.Resources>
+    <x:Double x:Key="HeadlineMediumFontSize">28</x:Double>
+    <x:Double x:Key="HeadlineMediumLineHeight">36</x:Double>
+    <x:Double x:Key="TitleSmallFontSize">16</x:Double>
+    <x:Double x:Key="TitleSmallLineHeight">22</x:Double>
+    <x:Double x:Key="TitleMediumFontSize">18</x:Double>
+    <x:Double x:Key="TitleMediumLineHeight">24</x:Double>
+    <x:Double x:Key="BodyLargeFontSize">16</x:Double>
+    <x:Double x:Key="BodyLargeLineHeight">25.6</x:Double>
+    <x:Double x:Key="BodyMediumFontSize">14</x:Double>
+    <x:Double x:Key="BodyMediumLineHeight">22.4</x:Double>
+    <x:Double x:Key="BodySmallFontSize">12</x:Double>
+    <x:Double x:Key="BodySmallLineHeight">19.2</x:Double>
+    <x:Double x:Key="LabelLargeFontSize">14</x:Double>
+    <x:Double x:Key="LabelLargeLineHeight">20</x:Double>
+    <x:Double x:Key="LabelMediumFontSize">12</x:Double>
+    <x:Double x:Key="LabelMediumLineHeight">16</x:Double>
+    <x:Double x:Key="LabelSmallFontSize">11</x:Double>
+    <x:Double x:Key="LabelSmallLineHeight">16</x:Double>
+  </Window.Resources>
+
+  <Border Classes="Card" Margin="16">
+    <DockPanel>
+
+      <!-- Header -->
+      <TextBlock DockPanel.Dock="Top"
+                 Classes="HeadlineMedium"
+                 Text="Whisper Model"
+                 Foreground="{DynamicResource OnSurfaceBrush}"
+                 Margin="0,0,0,20" />
+
+      <!-- Button Row (Bottom) -->
+      <StackPanel DockPanel.Dock="Bottom"
+                  Orientation="Horizontal"
+                  HorizontalAlignment="Right"
+                  Spacing="12"
+                  Margin="0,20,0,0">
+        <Button Classes="Secondary"
+                Content="Cancel"
+                Command="{Binding CancelCommand}" />
+        <Button Classes="Primary"
+                Content="Apply"
+                Command="{Binding ApplyCommand}" />
+      </StackPanel>
+
+      <!-- Status Message (above buttons) -->
+      <TextBlock DockPanel.Dock="Bottom"
+                 Classes="BodySmall"
+                 Text="{Binding StatusMessage}"
+                 Foreground="{DynamicResource OnSurfaceVariantBrush}"
+                 Margin="0,12,0,0"
+                 TextWrapping="Wrap" />
+
+      <!-- Main Content -->
+      <StackPanel Spacing="16">
+
+        <!-- Loading Indicator -->
+        <StackPanel Orientation="Horizontal"
+                    Spacing="8"
+                    IsVisible="{Binding IsLoading}">
+          <ProgressBar IsIndeterminate="True"
+                       Width="100"
+                       Height="4"
+                       VerticalAlignment="Center" />
+          <TextBlock Classes="BodySmall"
+                     Text="Scanning for models..."
+                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                     VerticalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Models Folder Display -->
+        <StackPanel Spacing="4">
+          <TextBlock Classes="LabelMedium"
+                     Text="Models Folder"
+                     Foreground="{DynamicResource OnSurfaceVariantBrush}" />
+          <TextBlock Classes="BodySmall"
+                     Text="{Binding ModelsFolder}"
+                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                     TextTrimming="CharacterEllipsis"
+                     ToolTip.Tip="{Binding ModelsFolder}" />
+        </StackPanel>
+
+        <!-- Model Selection -->
+        <StackPanel Spacing="8">
+          <TextBlock Classes="LabelMedium"
+                     Text="Model"
+                     Foreground="{DynamicResource OnSurfaceVariantBrush}" />
+          <ComboBox ItemsSource="{Binding AvailableModels}"
+                    SelectedItem="{Binding SelectedModel}"
+                    HorizontalAlignment="Stretch"
+                    PlaceholderText="No models available" />
+          <TextBlock Classes="BodySmall"
+                     Text="Place .bin model files in the models folder to make them available here."
+                     Foreground="{DynamicResource OnSurfaceDimBrush}"
+                     TextWrapping="Wrap" />
+        </StackPanel>
+
+      </StackPanel>
+    </DockPanel>
+  </Border>
+</Window>

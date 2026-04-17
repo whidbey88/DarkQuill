@@ -1,0 +1,16 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Base Window Style -->
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{DynamicResource SurfaceLowestBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+  </Style>
+
+  <!-- Base TextBlock Style -->
+  <Style Selector="TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}" />
+    <Setter Property="FontSize" Value="{DynamicResource BodyMediumFontSize}" />
+  </Style>
+
+</Styles>

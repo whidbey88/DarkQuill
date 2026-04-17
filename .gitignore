@@ -1,0 +1,33 @@
+# Build outputs
+bin/
+obj/
+out/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# User/IDE files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userprefs
+*.csproj.user
+
+# Rider
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Whisper model files
+models/
+
+# Build logs
+logs/
+
+# Publish output
+publish/
