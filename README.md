@@ -31,16 +31,12 @@ DarkQuill is project-based — you create named sessions, record audio clips, tr
 .\scripts\download-models.ps1
 ```
 
-**Bash (Windows Git Bash / Linux / macOS):**
+**Git Bash (Windows):**
 ```bash
-chmod +x scripts/download-models.sh
 ./scripts/download-models.sh
 ```
 
-This downloads `ggml-base.bin` (~148 MB) and places it in the correct folder:
-- **Windows:** `%AppData%\DarkQuill\models\`
-- **macOS:** `~/Library/Application Support/DarkQuill/models/`
-- **Linux:** `~/.local/share/DarkQuill/models/`
+This downloads `ggml-base.bin` (~148 MB) and places it in `%AppData%\DarkQuill\models\`.
 
 ### Available Models
 
@@ -50,11 +46,11 @@ This downloads `ggml-base.bin` (~148 MB) and places it in the correct folder:
 | Large v3 Turbo | `ggml-large-v3-turbo.bin` | ~1.6 GB | Slower | Excellent | `.\scripts\download-models.ps1 -Model turbo` |
 | Both | — | ~1.75 GB | — | — | `.\scripts\download-models.ps1 -Model all` |
 
-For bash, replace the PowerShell syntax with positional arguments: `./scripts/download-models.sh base`, `./scripts/download-models.sh turbo`, or `./scripts/download-models.sh all`.
+For Git Bash, use positional arguments: `./scripts/download-models.sh base`, `./scripts/download-models.sh turbo`, or `./scripts/download-models.sh all`.
 
 ### Manual Download
 
-If you prefer to download models manually, grab the GGML `.bin` files from [ggerganov/whisper.cpp on Hugging Face](https://huggingface.co/ggerganov/whisper.cpp) and place them in the models folder listed above.
+If you prefer to download models manually, grab the GGML `.bin` files from [ggerganov/whisper.cpp on Hugging Face](https://huggingface.co/ggerganov/whisper.cpp) and place them in `%AppData%\DarkQuill\models\`.
 
 ### Switching Models
 
@@ -141,7 +137,7 @@ AMD and Vulkan GPUs are not currently supported by Whisper.net.
 | Space | Stop recording |
 | Ctrl+Shift+T | Transcribe most recent recording |
 
-Hotkeys work globally — the app doesn't need to be focused. On non-Windows platforms, hotkeys are a graceful no-op.
+Hotkeys work globally — the app doesn't need to be focused.
 
 ## Data Storage
 

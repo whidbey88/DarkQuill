@@ -12,14 +12,8 @@ set -euo pipefail
 
 BASE_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main"
 
-# Determine the models directory based on OS
-if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-    MODELS_DIR="$APPDATA/DarkQuill/models"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    MODELS_DIR="$HOME/Library/Application Support/DarkQuill/models"
-else
-    MODELS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/DarkQuill/models"
-fi
+# DarkQuill is Windows-only. This script is for Git Bash / MSYS2 on Windows.
+MODELS_DIR="$APPDATA/DarkQuill/models"
 
 download_model() {
     local key="$1"
