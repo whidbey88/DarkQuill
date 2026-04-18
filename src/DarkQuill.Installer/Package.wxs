@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  DarkQuill MSI Installer — WiX v5
+  Installs the self-contained .NET 8 publish output to Program Files,
+  creates Desktop shortcut and Start Menu entry with uninstall link.
+-->
+
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+  <Package
+    Name="DarkQuill"
+    Manufacturer="Ken Smith"
+    Version="1.0.0.0"
+    UpgradeCode="75a19fdf-f5c6-4cd5-bf09-9aaf895bf3c1"
+    Scope="perMachine"
+    InstallerVersion="500">
+
+    <!-- Major upgrade: remove older versions automatically -->
+    <MajorUpgrade
+      DowngradeErrorMessage="A newer version of DarkQuill is already installed." />
+
+    <!-- Use the app icon in Add/Remove Programs -->
+    <Icon Id="DarkQuillIcon" SourceFile="$(var.PublishDir)DarkQuill.exe" />
+    <Property Id="ARPPRODUCTICON" Value="DarkQuillIcon" />
+
+    <!-- Update this URL once the repo is public -->
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/yourusername/DarkQuill" />
+
+    <!-- Embed the UI in the MSI (minimal built-in dialogs) -->
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- ================================================================== -->
+    <!-- Directory structure                                                 -->
+    <!-- ================================================================== -->
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="DarkQuill" />
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="DarkQuillMenuFolder" Name="DarkQuill" />
+    </StandardDirectory>
+
+    <StandardDirectory Id="DesktopFolder" />
+
+    <!-- ================================================================== -->
+    <!-- Shortcuts                                                           -->
+    <!-- ================================================================== -->
+    <ComponentGroup Id="Shortcuts">
+
+      <!-- Desktop shortcut -->
+      <Component Id="DesktopShortcut" Directory="DesktopFolder" Guid="*">
+        <Shortcut Id="DesktopLink"
+                  Name="DarkQuill"
+                  Description="Local audio transcription powered by Whisper"
+                  Target="[INSTALLFOLDER]DarkQuill.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="DarkQuillIcon" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\DarkQuill"
+                       Name="DesktopShortcut"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+
+      <!-- Start Menu folder with app shortcut and uninstall link -->
+      <Component Id="StartMenuShortcut" Directory="DarkQuillMenuFolder" Guid="*">
+        <Shortcut Id="StartMenuLink"
+                  Name="DarkQuill"
+                  Description="Local audio transcription powered by Whisper"
+                  Target="[INSTALLFOLDER]DarkQuill.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="DarkQuillIcon" />
+        <Shortcut Id="UninstallLink"
+                  Name="Uninstall DarkQuill"
+                  Target="[SystemFolder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="CleanStartMenu" On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\DarkQuill"
+                       Name="StartMenuShortcut"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+
+    </ComponentGroup>
+
+    <!-- ================================================================== -->
+    <!-- Application files — all publish output                              -->
+    <!-- ================================================================== -->
+    <ComponentGroup Id="AppFiles" Directory="INSTALLFOLDER">
+      <Files Include="$(var.PublishDir)**" />
+    </ComponentGroup>
+
+    <!-- ================================================================== -->
+    <!-- Feature: single feature containing everything                       -->
+    <!-- ================================================================== -->
+    <Feature Id="Complete" Title="DarkQuill" Level="1">
+      <ComponentGroupRef Id="AppFiles" />
+      <ComponentGroupRef Id="Shortcuts" />
+    </Feature>
+
+  </Package>
+
+</Wix>

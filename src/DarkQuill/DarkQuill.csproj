@@ -9,6 +9,13 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationIcon>Assets\Icons\darkquill.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+    <AssemblyTitle>DarkQuill</AssemblyTitle>
+    <Product>DarkQuill</Product>
+    <Authors>Ken Smith</Authors>
+    <Description>Local audio transcription powered by Whisper</Description>
+    <Copyright>Copyright © 2026 Ken Smith</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
