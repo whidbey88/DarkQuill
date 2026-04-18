@@ -32,10 +32,13 @@ public interface ITranscriptionService
     Task<IReadOnlyList<string>> GetAvailableModelsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Transcribes a WAV audio file using the Whisper model.
+    /// Transcribes an audio file using the Whisper model. Supports any format readable by
+    /// NAudio's <c>AudioFileReader</c> (WAV, MP3, and Windows Media Foundation codecs).
+    /// Non-WAV files or WAV files not in 16 kHz 16-bit PCM mono format are automatically
+    /// converted to a temporary WAV before inference.
     /// </summary>
-    /// <param name="wavFilePath">Absolute path to the WAV file (16-bit PCM, 16 kHz mono).</param>
+    /// <param name="audioFilePath">Absolute path to the audio file.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A <see cref="TranscriptionResult"/> containing the transcribed text and segments.</returns>
-    Task<TranscriptionResult> TranscribeAsync(string wavFilePath, CancellationToken cancellationToken = default);
+    Task<TranscriptionResult> TranscribeAsync(string audioFilePath, CancellationToken cancellationToken = default);
 }

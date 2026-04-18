@@ -220,6 +220,7 @@
     <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#recording">Recording Audio</a></li>
+    <li><a href="#importing">Importing Audio Files</a></li>
     <li><a href="#transcription">Transcription</a></li>
     <li><a href="#managing-recordings">Managing Recordings</a></li>
     <li><a href="#managing-transcriptions">Managing Transcriptions</a></li>
@@ -283,8 +284,29 @@
 <h3>After Recording</h3>
 <p>Once you stop, the audio is saved as a WAV file and a new entry appears in the <strong>Recordings</strong> panel on the left with a status of <strong>Pending</strong>.</p>
 
-<!-- 4. Transcription -->
-<h2 id="transcription">4. Transcription</h2>
+<!-- 4. Importing Audio Files -->
+<h2 id="importing">4. Importing Audio Files</h2>
+
+<p>In addition to recording directly, you can import existing audio files by dragging and dropping them onto the <strong>Recordings</strong> panel on the left side of the window.</p>
+
+<h3>How to Import</h3>
+<p>Drag one or more audio files from File Explorer onto the recordings panel. A hint overlay is shown when the panel is ready to accept files, and a purple border highlight appears during the drag. Dropped files appear immediately in today's recording group as <strong>Pending</strong> entries, ready for transcription.</p>
+
+<h3>Supported Formats</h3>
+<p>DarkQuill accepts any audio format supported by NAudio on Windows, including: <code>.wav</code>, <code>.mp3</code>, <code>.wma</code>, <code>.aac</code>, <code>.m4a</code>, <code>.aiff</code>, and <code>.flac</code>. Non-WAV files are automatically converted to the format Whisper requires before transcription.</p>
+
+<h3>Important Notes</h3>
+<ul>
+  <li><strong>Files are not copied.</strong> DarkQuill references the original file location. If you move or delete the source file, the recording entry will no longer be able to play or transcribe.</li>
+  <li><strong>No duration limit.</strong> Unlike live recordings (which cap at 5 minutes), imported files have no length restriction. Longer files will simply take more time to transcribe.</li>
+  <li><strong>Auto-selected for transcription.</strong> Dropped files are automatically added to the "Transcribe Selected" batch, so you can immediately click the button to begin processing them.</li>
+</ul>
+
+<div class="tip"><strong>Tip:</strong> This feature is great for transcribing voice memos, interview recordings, or audio exported from other applications.</div>
+
+<!-- 5. Transcription -->
+<h2 id="transcription">5. Transcription</h2>
+
 
 <p>Transcription converts your audio recordings into text using the Whisper AI model running locally on your machine.</p>
 
@@ -305,8 +327,8 @@
 
 <p>Once a recording is marked Complete, its transcription appears in the main panel grouped by date. The recording's status in the left panel changes and its background darkens to visually distinguish it from pending items.</p>
 
-<!-- 5. Managing Recordings -->
-<h2 id="managing-recordings">5. Managing Recordings</h2>
+<!-- 6. Managing Recordings -->
+<h2 id="managing-recordings">6. Managing Recordings</h2>
 
 <p>The left panel displays all recordings for the current project, grouped by date. Each date group can be expanded or collapsed by clicking the arrow toggle.</p>
 
@@ -316,8 +338,8 @@
 <h3>Deleting Recordings</h3>
 <p>Each recording has a delete button (✖) on the right side. You can also delete an entire day's recordings at once using the delete button on the day group header. Deletions are soft-deletes — the files remain on disk but are hidden from the UI. This protects against accidental data loss.</p>
 
-<!-- 6. Managing Transcriptions -->
-<h2 id="managing-transcriptions">6. Managing Transcriptions</h2>
+<!-- 7. Managing Transcriptions -->
+<h2 id="managing-transcriptions">7. Managing Transcriptions</h2>
 
 <p>The main content area displays transcriptions grouped by date. Each transcription card shows the recording timestamp, the transcribed text, and action buttons.</p>
 
@@ -330,15 +352,15 @@
 <h3>Expanding and Collapsing Groups</h3>
 <p>Click the arrow (▶/▼) on a day group header to expand or collapse that group. This helps manage the view when you have many transcriptions across multiple days.</p>
 
-<!-- 7. Export -->
-<h2 id="export">7. Exporting</h2>
+<!-- 8. Export -->
+<h2 id="export">8. Exporting</h2>
 
 <p>Click the <strong>Export</strong> button in the upper-right corner to save all transcriptions for the current project as a Markdown file. You'll be prompted to choose a save location and filename. The exported file contains all transcriptions ordered chronologically, making it easy to review or share your work.</p>
 
 <div class="tip"><strong>Tip:</strong> The default filename includes your project name — for example, <code>airport-dialogue-study-export.md</code>.</div>
 
-<!-- 8. Whisper Models -->
-<h2 id="whisper-models">8. Whisper Models</h2>
+<!-- 9. Whisper Models -->
+<h2 id="whisper-models">9. Whisper Models</h2>
 
 <p>DarkQuill uses Whisper GGML models for speech-to-text. Two models are available out of the box:</p>
 
@@ -356,8 +378,8 @@
 
 <div class="note">GPU acceleration is available if you have an NVIDIA GPU with CUDA support and the <code>Whisper.net.Runtime.Cuda</code> package. Without it, DarkQuill uses CPU inference, which works well for the base model.</div>
 
-<!-- 9. Audio Settings -->
-<h2 id="audio-settings">9. Audio Settings</h2>
+<!-- 10. Audio Settings -->
+<h2 id="audio-settings">10. Audio Settings</h2>
 
 <p>Click the microphone/settings icon on the recording control panel to open Audio Settings. Here you can:</p>
 
@@ -369,8 +391,8 @@
 
 <p>Your device selection and input level are saved automatically and persist between sessions.</p>
 
-<!-- 10. Keyboard Shortcuts -->
-<h2 id="keyboard-shortcuts">10. Keyboard Shortcuts</h2>
+<!-- 11. Keyboard Shortcuts -->
+<h2 id="keyboard-shortcuts">11. Keyboard Shortcuts</h2>
 
 <table class="shortcut-table">
   <tr><th>Shortcut</th><th>Action</th><th>When Available</th></tr>
@@ -381,8 +403,8 @@
 
 <div class="note"><kbd>F9</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> are global hotkeys — they work even when DarkQuill is not in the foreground. <kbd>Space</kbd> is a local shortcut and only works when DarkQuill is focused.</div>
 
-<!-- 11. File Storage -->
-<h2 id="file-storage">11. File Storage</h2>
+<!-- 12. File Storage -->
+<h2 id="file-storage">12. File Storage</h2>
 
 <p>DarkQuill stores everything as files on your local disk — no database, no cloud. Understanding the folder structure can be helpful for backup or manual cleanup.</p>
 
@@ -406,8 +428,8 @@
 <h3>Soft-Delete State</h3>
 <p>When you delete recordings or transcriptions in the UI, they aren't removed from disk. Instead, their IDs are tracked in <code>app-state.json</code>. The original files remain intact for safety.</p>
 
-<!-- 12. Tips -->
-<h2 id="tips">12. Tips &amp; Best Practices</h2>
+<!-- 13. Tips -->
+<h2 id="tips">13. Tips &amp; Best Practices</h2>
 
 <ul>
   <li><strong>Keep clips short.</strong> Whisper works best with clips under 2 minutes. Short clips also transcribe faster and are easier to review.</li>
@@ -418,8 +440,8 @@
   <li><strong>Check the VU meter.</strong> Before a long session, do a quick test recording to make sure your levels are good. The meter should respond clearly to your voice without hitting the top constantly.</li>
 </ul>
 
-<!-- 13. Troubleshooting -->
-<h2 id="troubleshooting">13. Troubleshooting</h2>
+<!-- 14. Troubleshooting -->
+<h2 id="troubleshooting">14. Troubleshooting</h2>
 
 <h3>No audio devices found</h3>
 <p>Make sure a microphone is connected and recognized by Windows. Check Windows Sound Settings to verify the device appears as an input device. Then restart DarkQuill.</p>

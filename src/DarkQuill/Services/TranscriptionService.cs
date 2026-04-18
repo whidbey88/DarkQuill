@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using NAudio.Wave;
 using Whisper.net;
 using DarkQuill.Models;
 
@@ -133,27 +134,37 @@ public class TranscriptionService : ITranscriptionService, IDisposable
         return models.AsReadOnly();
     }
 
+    /// <summary>
+    /// The target sample rate required by Whisper models.
+    /// </summary>
+    private const int WhisperSampleRate = 16000;
+
+    /// <summary>
+    /// File extensions that are accepted for transcription. Any format readable by
+    /// NAudio's <see cref="AudioFileReader"/> on Windows is supported.
+    /// </summary>
+    public static readonly IReadOnlySet<string> SupportedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ".wav", ".mp3", ".wma", ".aac", ".m4a", ".aiff", ".aif", ".flac"
+    };
+
     /// <inheritdoc />
     /// <remarks>
-    /// Lazily initializes the model if not already loaded. Runs Whisper inference on a
-    /// background thread via <see cref="Task.Run"/> to keep the UI thread responsive.
+    /// Lazily initializes the model if not already loaded. Non-WAV files are converted to
+    /// a temporary 16 kHz 16-bit PCM mono WAV before inference. The temp file is deleted
+    /// after transcription completes.
     /// </remarks>
-    /// <exception cref="ArgumentException">Thrown when <paramref name="wavFilePath"/> is null or empty.</exception>
-    /// <exception cref="FileNotFoundException">Thrown when the WAV file does not exist.</exception>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="audioFilePath"/> is null or empty.</exception>
+    /// <exception cref="FileNotFoundException">Thrown when the audio file does not exist.</exception>
     /// <exception cref="TranscriptionException">Thrown when inference fails.</exception>
-    public async Task<TranscriptionResult> TranscribeAsync(string wavFilePath, CancellationToken cancellationToken = default)
+    public async Task<TranscriptionResult> TranscribeAsync(string audioFilePath, CancellationToken cancellationToken = default)
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
-        ArgumentException.ThrowIfNullOrEmpty(wavFilePath);
+        ArgumentException.ThrowIfNullOrEmpty(audioFilePath);
 
-        if (!File.Exists(wavFilePath))
+        if (!File.Exists(audioFilePath))
         {
-            throw new FileNotFoundException($"WAV file not found: '{wavFilePath}'", wavFilePath);
-        }
-
-        if (!wavFilePath.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new InvalidOperationException($"File is not a WAV file: '{wavFilePath}'");
+            throw new FileNotFoundException($"Audio file not found: '{audioFilePath}'", audioFilePath);
         }
 
         // Lazy initialization — ensure model is loaded.
@@ -167,20 +178,31 @@ public class TranscriptionService : ITranscriptionService, IDisposable
             await InitializeAsync(fallbackModel, cancellationToken).ConfigureAwait(false);
         }
 
+        // Convert to Whisper-compatible WAV if needed.
+        string wavPath = audioFilePath;
+        bool isTempFile = false;
+
+        if (!IsWhisperReadyWav(audioFilePath))
+        {
+            wavPath = await Task.Run(() => ConvertToWhisperWav(audioFilePath), cancellationToken).ConfigureAwait(false);
+            isTempFile = true;
+            Debug.WriteLine($"Converted '{audioFilePath}' to temp WAV: '{wavPath}'");
+        }
+
         var stopwatch = Stopwatch.StartNew();
 
         try
         {
-            var result = await Task.Run(() => RunInferenceAsync(wavFilePath, cancellationToken), cancellationToken)
+            var result = await Task.Run(() => RunInferenceAsync(wavPath, cancellationToken), cancellationToken)
                 .ConfigureAwait(false);
 
             stopwatch.Stop();
-            Debug.WriteLine($"Transcription completed in {stopwatch.Elapsed.TotalSeconds:F1}s: {wavFilePath}");
+            Debug.WriteLine($"Transcription completed in {stopwatch.Elapsed.TotalSeconds:F1}s: {audioFilePath}");
 
             if (stopwatch.Elapsed > SlowTranscriptionThreshold)
             {
                 Debug.WriteLine($"WARNING: Transcription took {stopwatch.Elapsed.TotalSeconds:F1}s (>{SlowTranscriptionThreshold.TotalMinutes}m threshold). " +
-                    $"GPU={_usingGpu}, File={wavFilePath}");
+                    $"GPU={_usingGpu}, File={audioFilePath}");
             }
 
             return result;
@@ -195,7 +217,93 @@ public class TranscriptionService : ITranscriptionService, IDisposable
         }
         catch (Exception ex)
         {
-            throw new TranscriptionException($"Transcription failed for '{wavFilePath}': {ex.Message}", ex);
+            throw new TranscriptionException($"Transcription failed for '{audioFilePath}': {ex.Message}", ex);
+        }
+        finally
+        {
+            if (isTempFile)
+            {
+                TryDeleteTempFile(wavPath);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Determines whether a file is already a WAV in 16 kHz 16-bit PCM mono format
+    /// (the format Whisper requires). Returns false for non-WAV files or WAV files
+    /// with different encoding parameters.
+    /// </summary>
+    private static bool IsWhisperReadyWav(string filePath)
+    {
+        if (!filePath.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var reader = new WaveFileReader(filePath);
+            var fmt = reader.WaveFormat;
+            return fmt.Encoding == WaveFormatEncoding.Pcm
+                   && fmt.SampleRate == WhisperSampleRate
+                   && fmt.BitsPerSample == 16
+                   && fmt.Channels == 1;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Converts any NAudio-readable audio file to a 16 kHz 16-bit PCM mono WAV
+    /// suitable for Whisper inference. The output is written to a temporary file.
+    /// </summary>
+    /// <param name="inputPath">Path to the source audio file.</param>
+    /// <returns>Path to the temporary WAV file.</returns>
+    /// <exception cref="TranscriptionException">Thrown when the file cannot be read or converted.</exception>
+    private static string ConvertToWhisperWav(string inputPath)
+    {
+        var tempPath = System.IO.Path.Combine(
+            System.IO.Path.GetTempPath(),
+            $"darkquill-convert-{Guid.NewGuid():N}.wav");
+
+        try
+        {
+            using var reader = new AudioFileReader(inputPath);
+            var targetFormat = new WaveFormat(WhisperSampleRate, 16, 1);
+
+            using var resampler = new MediaFoundationResampler(reader, targetFormat)
+            {
+                ResamplerQuality = 60 // High quality resampling
+            };
+
+            WaveFileWriter.CreateWaveFile(tempPath, resampler);
+            return tempPath;
+        }
+        catch (Exception ex)
+        {
+            TryDeleteTempFile(tempPath);
+            throw new TranscriptionException(
+                $"Failed to convert audio file '{inputPath}' to Whisper-compatible format: {ex.Message}", ex);
+        }
+    }
+
+    /// <summary>
+    /// Attempts to delete a temporary file, suppressing any errors.
+    /// </summary>
+    private static void TryDeleteTempFile(string path)
+    {
+        try
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Failed to delete temp file '{path}': {ex.Message}");
         }
     }
 

@@ -5,6 +5,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using NAudio.Wave;
 using DarkQuill.Models;
 using DarkQuill.Services;
 
@@ -57,6 +58,20 @@ public partial class RecordingListViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private string? _currentlyPlayingFileName;
+
+    /// <summary>
+    /// Whether the drag-and-drop hint overlay should be visible.
+    /// Starts as <c>true</c> and is dismissed when a voice recording completes or a file is imported.
+    /// </summary>
+    [ObservableProperty]
+    private bool _showDropHint = true;
+
+    /// <summary>
+    /// Whether a drag-over operation is currently active on the recording list.
+    /// Used by the view to show a visual highlight during drag.
+    /// </summary>
+    [ObservableProperty]
+    private bool _isDragOver;
 
     /// <summary>
     /// Initializes the recording list ViewModel with required services and message subscriptions.
@@ -393,6 +408,87 @@ public partial class RecordingListViewModel : ObservableObject
         }
 
         TotalRecordingCount++;
+        ShowDropHint = false;
+    }
+
+    /// <summary>
+    /// Imports an external audio file as a recording entry. The file is not copied to the
+    /// recordings folder — only its path is referenced. The new entry is added to today's
+    /// date group and auto-selected for batch transcription.
+    /// </summary>
+    /// <param name="filePath">Absolute path to the external audio file.</param>
+    /// <returns>True if the file was imported successfully, false if it failed or was unsupported.</returns>
+    public async Task<bool> ImportExternalFileAsync(string filePath)
+    {
+        try
+        {
+            var fileName = System.IO.Path.GetFileName(filePath);
+            var extension = System.IO.Path.GetExtension(filePath);
+
+            if (!TranscriptionService.SupportedExtensions.Contains(extension))
+            {
+                StatusMessage = $"Unsupported file format: {extension}";
+                return false;
+            }
+
+            var duration = await Task.Run(() => GetAudioDuration(filePath)).ConfigureAwait(true);
+
+            var recording = new Recording(
+                FileName: fileName,
+                Path: filePath,
+                Duration: duration,
+                Timestamp: DateTime.Now,
+                TranscriptionStatus: TranscriptionStatus.Pending,
+                IsExternal: true);
+
+            var todayGroup = Recordings.FirstOrDefault(g => g.Date.Date == DateTime.Today);
+            if (todayGroup is not null)
+            {
+                todayGroup.Items.Insert(0, recording);
+            }
+            else
+            {
+                var newGroup = new DayGroup<Recording>(
+                    DateTime.Today,
+                    new ObservableCollection<Recording> { recording },
+                    isExpanded: true);
+                Recordings.Insert(0, newGroup);
+            }
+
+            TotalRecordingCount++;
+
+            // Auto-select for "Transcribe Selected" counter.
+            if (!SelectedRecordings.Contains(recording))
+            {
+                SelectedRecordings.Add(recording);
+            }
+
+            ShowDropHint = false;
+            StatusMessage = string.Empty;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Failed to import external file '{filePath}': {ex.Message}");
+            StatusMessage = $"Failed to import: {System.IO.Path.GetFileName(filePath)}";
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Reads the duration of any NAudio-supported audio file. Returns <see cref="TimeSpan.Zero"/> on failure.
+    /// </summary>
+    private static TimeSpan GetAudioDuration(string filePath)
+    {
+        try
+        {
+            using var reader = new AudioFileReader(filePath);
+            return reader.TotalTime;
+        }
+        catch
+        {
+            return TimeSpan.Zero;
+        }
     }
 
     /// <summary>

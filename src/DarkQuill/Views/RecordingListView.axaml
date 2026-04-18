@@ -4,7 +4,8 @@
              xmlns:models="using:DarkQuill.Models"
              xmlns:converters="using:DarkQuill.Converters"
              x:Class="DarkQuill.Views.RecordingListView"
-             x:DataType="vm:RecordingListViewModel">
+             x:DataType="vm:RecordingListViewModel"
+             DragDrop.AllowDrop="True">
 
   <UserControl.Resources>
     <converters:TranscriptionStatusToBrushConverter x:Key="StatusToBrushConverter" />
@@ -12,6 +13,17 @@
     <converters:TranscriptionStatusToPendingConverter x:Key="StatusToPendingConverter" />
     <converters:TranscriptionStatusToBackgroundConverter x:Key="StatusToBackgroundConverter" />
   </UserControl.Resources>
+
+  <Panel>
+
+  <!-- Drag-over highlight border (visible during active drag) -->
+  <Border x:Name="DragHighlightBorder"
+          IsVisible="{Binding IsDragOver}"
+          BorderBrush="{DynamicResource PrimaryBrush}"
+          BorderThickness="2"
+          CornerRadius="8"
+          Opacity="0.6"
+          IsHitTestVisible="False" />
 
   <DockPanel>
 
@@ -240,4 +252,26 @@
       </ItemsControl>
     </ScrollViewer>
   </DockPanel>
+
+  <!-- Drop Hint Overlay (visible until first recording or import; pinned to bottom, very subtle) -->
+  <StackPanel IsVisible="{Binding ShowDropHint}"
+              IsHitTestVisible="False"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Center"
+              Margin="0,0,0,120"
+              Opacity="0.10"
+              Spacing="10">
+    <!-- Outline document icon with folded corner -->
+    <Viewbox Width="108" Height="108" HorizontalAlignment="Center">
+      <Path Stroke="{DynamicResource PrimaryBrush}" StrokeThickness="3.5" StrokeLineCap="Round" StrokeJoin="Round" Fill="Transparent"
+            Data="M 8 2 L 72 2 L 100 30 L 100 124 C 100 128.4 96.4 132 92 132 L 8 132 C 3.6 132 0 128.4 0 124 L 0 10 C 0 5.6 3.6 2 8 2 Z M 72 2 L 72 30 L 100 30" />
+    </Viewbox>
+    <TextBlock Text="Drop audio files here"
+               FontSize="20"
+               FontWeight="SemiBold"
+               HorizontalAlignment="Center"
+               Foreground="{DynamicResource PrimaryBrush}" />
+  </StackPanel>
+
+  </Panel>
 </UserControl>
