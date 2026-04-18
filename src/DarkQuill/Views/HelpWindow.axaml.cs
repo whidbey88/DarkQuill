@@ -40,7 +40,7 @@ public partial class HelpWindow : Window
             var tempPath = Path.Combine(Path.GetTempPath(), "darkquill-user-guide.html");
             await File.WriteAllTextAsync(tempPath, html).ConfigureAwait(true);
 
-            HelpWebView.Url = new Uri(tempPath);
+            HelpWebView.Url = new Uri($"file:///{tempPath.Replace('\\', '/')}");
         }
         catch (Exception ex)
         {
