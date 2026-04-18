@@ -45,9 +45,9 @@
     <Setter Property="Background" Value="{DynamicResource PrimaryDimBrush}" />
   </Style>
 
-  <!-- Tertiary Button: Filled at rest, purple text, pink hover with white text -->
+  <!-- Tertiary Button: Filled at rest, purple text, pink hover with white text (semi-transparent) -->
   <Style Selector="Button.Tertiary">
-    <Setter Property="Background" Value="{DynamicResource SurfaceContainerBrush}" />
+    <Setter Property="Background" Value="#A0131317" />
     <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
     <Setter Property="Padding" Value="{DynamicResource PaddingButton}" />
     <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusMd}" />
@@ -80,16 +80,16 @@
     <Setter Property="BorderBrush" Value="{DynamicResource GhostBorderBrush}" />
   </Style>
 
-  <!-- Card: Elevated container with generous padding -->
+  <!-- Card: Elevated container with generous padding (semi-transparent for background bleed) -->
   <Style Selector="Border.Card">
-    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighestBrush}" />
+    <Setter Property="Background" Value="#782a2a30" />
     <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusXl}" />
     <Setter Property="Padding" Value="{DynamicResource PaddingCard}" />
   </Style>
 
-  <!-- List Item: Tonal surface with hover -->
+  <!-- List Item: Tonal surface with hover (semi-transparent) -->
   <Style Selector="Border.ListItem">
-    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighBrush}" />
+    <Setter Property="Background" Value="#B025252b" />
     <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusMd}" />
     <Setter Property="Padding" Value="16,12" />
     <Setter Property="Margin" Value="{DynamicResource MarginListItem}" />
@@ -118,27 +118,27 @@
     <Setter Property="Padding" Value="8,4" />
   </Style>
 
-  <!-- Recording Item: Selectable list item with hover state -->
+  <!-- Recording Item: Selectable list item with hover state (semi-transparent) -->
   <Style Selector="Border.RecordingItem">
-    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighBrush}" />
+    <Setter Property="Background" Value="#B025252b" />
     <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
     <Setter Property="Padding" Value="12" />
     <Setter Property="Margin" Value="0,0,0,8" />
     <Setter Property="Cursor" Value="Hand" />
   </Style>
 
-  <!-- Recording Item Selected state -->
+  <!-- Recording Item Selected state (semi-transparent) -->
   <Style Selector="Border.RecordingItemSelected">
-    <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighestBrush}" />
+    <Setter Property="Background" Value="#A02a2a30" />
     <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
     <Setter Property="Padding" Value="12" />
     <Setter Property="Margin" Value="0,0,0,8" />
     <Setter Property="Cursor" Value="Hand" />
   </Style>
 
-  <!-- Day Group Header: Collapsible section header -->
+  <!-- Day Group Header: Collapsible section header (semi-transparent) -->
   <Style Selector="Border.DayGroupHeader">
-    <Setter Property="Background" Value="{DynamicResource SurfaceContainerLowBrush}" />
+    <Setter Property="Background" Value="#A0131317" />
     <Setter Property="CornerRadius" Value="{DynamicResource CornerRadiusSm}" />
     <Setter Property="Padding" Value="12,8" />
     <Setter Property="Margin" Value="0,0,0,4" />

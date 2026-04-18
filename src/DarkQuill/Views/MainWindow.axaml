@@ -10,77 +10,103 @@
         Height="800"
         MinWidth="800"
         MinHeight="600"
-        Background="{DynamicResource SurfaceBrush}">
+        Background="#0a0a0e">
 
-  <!-- Two-Column Layout -->
-  <Grid ColumnDefinitions="320,*">
+  <Panel>
 
-    <!-- Left Panel: Recordings List -->
-    <Border Grid.Column="0"
-            Background="{DynamicResource SurfaceContainerLowBrush}"
-            Padding="16,16,16,24">
-      <views:RecordingListView DataContext="{Binding RecordingListViewModel}" />
-    </Border>
+    <!-- Background Image Layer -->
+    <Image Source="/Assets/Images/aurora_3_mesh.png"
+           Stretch="UniformToFill"
+           Opacity="0.5" />
 
-    <!-- Right Panel: Main Content Area -->
-    <Border Grid.Column="1"
-            Background="{DynamicResource SurfaceBrush}"
-            Padding="32,24">
-      <DockPanel>
+    <!-- Two-Column Layout -->
+    <Grid ColumnDefinitions="320,*">
 
-        <!-- Header Section -->
-        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,32">
-          <Grid ColumnDefinitions="*,Auto">
-            <!-- Project Name -->
-            <TextBlock Grid.Column="0"
-                       Classes="HeadlineMedium"
-                       Text="{Binding CurrentProject, FallbackValue=DarkQuill}"
-                       Foreground="{DynamicResource OnSurfaceBrush}"
-                       VerticalAlignment="Center" />
+      <!-- Left Panel: Recordings List -->
+      <Border Grid.Column="0"
+              Background="#E60a0a0e"
+              Padding="16,16,16,24">
+        <views:RecordingListView DataContext="{Binding RecordingListViewModel}" />
+      </Border>
 
-            <!-- Action Buttons -->
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12"
-                        VerticalAlignment="Center">
-              <Button Classes="Secondary"
-                      Content="Export"
-                      Command="{Binding ExportCommand}"
-                      ToolTip.Tip="Export transcriptions to Markdown" />
-              <Button Classes="Secondary"
-                      Content="New Session"
-                      Command="{Binding NewSessionCommand}" />
-            </StackPanel>
-          </Grid>
+      <!-- Right Panel: Main Content Area -->
+      <Border Grid.Column="1"
+              Background="#B00e0e12"
+              Padding="32,24">
+        <DockPanel>
 
-        </StackPanel>
+          <!-- Header Section -->
+          <StackPanel DockPanel.Dock="Top" Margin="0,0,0,32">
+            <Grid ColumnDefinitions="*,Auto">
+              <!-- Project Name -->
+              <TextBlock Grid.Column="0"
+                         Classes="HeadlineMedium"
+                         Text="{Binding CurrentProject, FallbackValue=DarkQuill}"
+                         Foreground="{DynamicResource OnSurfaceBrush}"
+                         VerticalAlignment="Center" />
 
-        <!-- Recording Control Panel -->
-        <Border DockPanel.Dock="Top"
-                Classes="Card"
-                Margin="0,0,0,24">
-          <views:RecordingControlView DataContext="{Binding RecordingControlViewModel}" />
-        </Border>
+              <!-- Action Buttons -->
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12"
+                          VerticalAlignment="Center">
+                <Button Classes="Secondary"
+                        Content="Export"
+                        Command="{Binding ExportCommand}"
+                        ToolTip.Tip="Export transcriptions to Markdown" />
+                <Button Classes="Secondary"
+                        Content="New Session"
+                        Command="{Binding NewSessionCommand}" />
+              </StackPanel>
+            </Grid>
 
-        <!-- Transcription Status Bar (visible during transcription) -->
-        <Border DockPanel.Dock="Top"
-                IsVisible="{Binding IsTranscribing}"
-                Background="{DynamicResource SurfaceContainerHighBrush}"
-                CornerRadius="8"
-                Padding="16,12"
-                Margin="0,0,0,16">
-          <StackPanel Orientation="Horizontal" Spacing="12">
-            <TextBlock Classes="LabelMedium"
-                       Text="{Binding TranscriptionStatusText}"
-                       Foreground="{DynamicResource SecondaryBrush}"
-                       VerticalAlignment="Center" />
           </StackPanel>
-        </Border>
 
-        <!-- Transcription List Area -->
-        <views:TranscriptionListView DataContext="{Binding TranscriptionListViewModel}" />
+          <!-- Recording Control Panel -->
+          <Border DockPanel.Dock="Top"
+                  Classes="Card"
+                  Margin="0,0,0,24">
+            <views:RecordingControlView DataContext="{Binding RecordingControlViewModel}" />
+          </Border>
 
-      </DockPanel>
-    </Border>
+          <!-- Transcription Status Bar (visible during transcription) -->
+          <Border DockPanel.Dock="Top"
+                  IsVisible="{Binding IsTranscribing}"
+                  Background="#A025252b"
+                  CornerRadius="8"
+                  Padding="16,12"
+                  Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+              <TextBlock Classes="LabelMedium"
+                         Text="{Binding TranscriptionStatusText}"
+                         Foreground="{DynamicResource SecondaryBrush}"
+                         VerticalAlignment="Center" />
+            </StackPanel>
+          </Border>
 
-  </Grid>
+          <!-- Transcription List Area -->
+          <views:TranscriptionListView DataContext="{Binding TranscriptionListViewModel}" />
+
+        </DockPanel>
+      </Border>
+
+    </Grid>
+
+    <!-- Help Button (floating, lower-right corner) -->
+    <Button x:Name="HelpButton"
+            Classes="IconButton"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="0,0,24,24"
+            Width="40"
+            Height="40"
+            ToolTip.Tip="User Guide">
+      <TextBlock Text="?"
+                 FontSize="20"
+                 FontWeight="Bold"
+                 Foreground="{DynamicResource PrimaryBrush}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center" />
+    </Button>
+
+  </Panel>
 
 </Window>

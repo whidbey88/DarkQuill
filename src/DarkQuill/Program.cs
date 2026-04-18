@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.WebView.Desktop;
 
 namespace DarkQuill;
 
@@ -17,6 +18,7 @@ internal sealed class Program
     public static AppBuilder BuildAvaloniaApp() =>
         AppBuilder.Configure<App>()
             .UsePlatformDetect()
+            .UseDesktopWebView()
             .WithInterFont()
             .LogToTrace();
 }

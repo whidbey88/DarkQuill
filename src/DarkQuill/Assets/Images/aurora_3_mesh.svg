@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Deep base -->
+    <linearGradient id="sky3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0530"/>
+      <stop offset="100%" stop-color="#1a0845"/>
+    </linearGradient>
+
+    <!-- Big radial blobs for a mesh-gradient look -->
+    <radialGradient id="blob3a" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#b040ff" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#7020d0" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#4a1080" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="blob3b" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4070ff" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="#2040a8" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#10205a" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="blob3c" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff50a0" stop-opacity="0.85"/>
+      <stop offset="55%" stop-color="#c02870" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#601848" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="blob3d" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff8040" stop-opacity="0.7"/>
+      <stop offset="55%" stop-color="#c04820" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#602010" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="blob3e" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e0a8ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#8040c0" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Thin arc line gradients -->
+    <linearGradient id="arcLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="blur3" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="softblur3" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky3)"/>
+
+  <!-- Stars scattered -->
+  <g fill="#ffffff">
+    <circle cx="100" cy="100" r="1" opacity="0.6"/>
+    <circle cx="300" cy="60" r="1.5" opacity="0.8"/>
+    <circle cx="540" cy="130" r="1" opacity="0.6"/>
+    <circle cx="780" cy="80" r="1" opacity="0.7"/>
+    <circle cx="1020" cy="140" r="1.5" opacity="0.8"/>
+    <circle cx="1260" cy="70" r="1" opacity="0.6"/>
+    <circle cx="1480" cy="120" r="1" opacity="0.7"/>
+    <circle cx="200" cy="780" r="1" opacity="0.5"/>
+    <circle cx="900" cy="820" r="1" opacity="0.5"/>
+    <circle cx="1400" cy="790" r="1.5" opacity="0.6"/>
+  </g>
+
+  <!-- Mesh gradient blobs (big, overlapping, blurred) -->
+  <g filter="url(#blur3)">
+    <ellipse cx="300" cy="300" rx="500" ry="400" fill="url(#blob3a)"/>
+    <ellipse cx="900" cy="200" rx="550" ry="350" fill="url(#blob3b)"/>
+    <ellipse cx="1300" cy="450" rx="500" ry="400" fill="url(#blob3a)"/>
+    <ellipse cx="600" cy="600" rx="550" ry="400" fill="url(#blob3c)"/>
+    <ellipse cx="1200" cy="750" rx="500" ry="300" fill="url(#blob3d)"/>
+    <ellipse cx="200" cy="700" rx="400" ry="350" fill="url(#blob3b)"/>
+    <ellipse cx="800" cy="400" rx="350" ry="300" fill="url(#blob3e)"/>
+  </g>
+
+  <!-- Sharp arcing light bands cutting across -->
+  <g filter="url(#softblur3)" opacity="0.8">
+    <path d="M -50,500 Q 400,300 800,420 T 1650,350" fill="none" stroke="url(#arcLine)" stroke-width="4"/>
+    <path d="M -50,560 Q 400,380 800,490 T 1650,430" fill="none" stroke="url(#arcLine)" stroke-width="3" opacity="0.7"/>
+    <path d="M -50,460 Q 400,260 800,380 T 1650,310" fill="none" stroke="url(#arcLine)" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <!-- Bright arc highlights -->
+  <g filter="url(#softblur3)">
+    <path d="M -50,500 Q 400,300 800,420 T 1650,350"
+          fill="none" stroke="#f0c8ff" stroke-width="8" opacity="0.4"/>
+    <path d="M 200,480 Q 500,340 800,410 T 1400,370"
+          fill="none" stroke="#ffb0e0" stroke-width="5" opacity="0.55"/>
+  </g>
+
+  <!-- Small accent blobs for depth -->
+  <g filter="url(#softblur3)">
+    <circle cx="450" cy="350" r="80" fill="#c060ff" opacity="0.35"/>
+    <circle cx="1050" cy="280" r="60" fill="#5080ff" opacity="0.4"/>
+    <circle cx="1300" cy="550" r="90" fill="#ff60a0" opacity="0.35"/>
+    <circle cx="720" cy="650" r="70" fill="#ff8040" opacity="0.3"/>
+  </g>
+
+</svg>

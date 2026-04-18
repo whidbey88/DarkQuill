@@ -1,6 +1,4 @@
 using System.Globalization;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using DarkQuill.Models;
@@ -18,22 +16,24 @@ public class TranscriptionStatusToBackgroundConverter : IValueConverter
     /// Converts a <see cref="TranscriptionStatus"/> to a background brush.
     /// Completed recordings get a darker background; all others get the standard background.
     /// </summary>
+    /// <summary>
+    /// Semi-transparent brush for completed recordings.
+    /// </summary>
+    private static readonly SolidColorBrush CompleteBrush = new(Color.Parse("#A019191d"));
+
+    /// <summary>
+    /// Semi-transparent brush for pending recordings.
+    /// </summary>
+    private static readonly SolidColorBrush PendingBrush = new(Color.Parse("#A025252b"));
+
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is TranscriptionStatus status && status == TranscriptionStatus.Complete)
         {
-            if (Application.Current!.TryFindResource("SurfaceContainerHighDarkBrush", out var darkBrush))
-            {
-                return darkBrush;
-            }
+            return CompleteBrush;
         }
 
-        if (Application.Current!.TryFindResource("SurfaceContainerHighBrush", out var normalBrush))
-        {
-            return normalBrush;
-        }
-
-        return null;
+        return PendingBrush;
     }
 
     /// <summary>

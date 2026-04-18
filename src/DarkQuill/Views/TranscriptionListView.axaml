@@ -120,12 +120,13 @@
                     </TextBlock>
                   </StackPanel>
 
-                  <!-- Delete Group Button -->
+                  <!-- Delete Group Button (right-padded to align with card delete buttons) -->
                   <Button Grid.Column="2"
                           Classes="IconButton"
                           Command="{Binding $parent[ItemsControl].((vm:TranscriptionListViewModel)DataContext).DeleteDayGroupCommand}"
                           CommandParameter="{Binding}"
-                          ToolTip.Tip="Delete all transcriptions in this group">
+                          ToolTip.Tip="Delete all transcriptions in this group"
+                          Margin="0,0,12,0">
                     <TextBlock Text="&#x274C;" Opacity="0.7" FontSize="24" />
                   </Button>
                 </Grid>
@@ -177,7 +178,7 @@
                                 ToolTip.Tip="Delete transcription"
                                 VerticalAlignment="Center"
                                 Margin="12,0,0,0">
-                          <TextBlock Text="&#x274C;" Opacity="0.7" FontSize="24" />
+                          <TextBlock Text="&#x274C;" Opacity="0.7" FontSize="18" />
                         </Button>
 
                       </Grid>

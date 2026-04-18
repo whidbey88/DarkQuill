@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarkQuill User Guide</title>
+<style>
+  :root {
+    --surface-lowest: #0a0a0e;
+    --surface: #0e0e12;
+    --surface-container-low: #131317;
+    --surface-container: #1a1a1e;
+    --surface-container-high: #25252b;
+    --surface-container-highest: #2a2a30;
+    --on-surface: #fcf8fe;
+    --on-surface-variant: #cac7d0;
+    --on-surface-dim: #a8a5af;
+    --primary: #c799ff;
+    --primary-container: #bc87fe;
+    --primary-bright: #dbb8ff;
+    --primary-dim: #9f6fbf;
+    --secondary: #fd9000;
+    --outline-variant: #48474c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface);
+    color: var(--on-surface);
+    font-family: 'Segoe UI', 'Inter', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 32px 48px 64px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-bright);
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  h1 + p {
+    color: var(--on-surface-dim);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-top: 40px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--on-surface-variant);
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  a:hover {
+    color: var(--primary-bright);
+    text-decoration: underline;
+  }
+  a:active { color: var(--primary-container); }
+
+  /* Table of Contents */
+  nav {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+  }
+  nav p {
+    font-weight: 600;
+    color: var(--on-surface-variant);
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  nav ol {
+    list-style: none;
+    counter-reset: toc;
+    padding-left: 0;
+  }
+  nav ol li {
+    counter-increment: toc;
+    margin-bottom: 4px;
+  }
+  nav ol li::before {
+    content: counter(toc) ".";
+    color: var(--on-surface-dim);
+    margin-right: 8px;
+    font-size: 13px;
+  }
+  nav ol li a {
+    font-size: 14px;
+  }
+
+  code {
+    background: var(--surface-container-high);
+    color: var(--primary-bright);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 13px;
+  }
+
+  kbd {
+    display: inline-block;
+    background: var(--surface-container-high);
+    border: 1px solid var(--outline-variant);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 13px;
+    color: var(--on-surface-variant);
+    box-shadow: 0 1px 0 var(--outline-variant);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 14px;
+  }
+  th {
+    text-align: left;
+    background: var(--surface-container-low);
+    color: var(--on-surface-variant);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--outline-variant);
+    font-weight: 600;
+  }
+  td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--surface-container-high);
+    color: var(--on-surface);
+  }
+  tr:hover td {
+    background: var(--surface-container-low);
+  }
+
+  .card {
+    background: var(--surface-container-low);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 12px 0 20px;
+  }
+
+  .tip {
+    background: var(--surface-container-low);
+    border-left: 3px solid var(--secondary);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0 20px;
+    font-size: 14px;
+  }
+  .tip strong {
+    color: var(--secondary);
+  }
+
+  .note {
+    background: var(--surface-container-low);
+    border-left: 3px solid var(--primary-dim);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0 20px;
+    font-size: 14px;
+    color: var(--on-surface-dim);
+  }
+
+  ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  li { margin-bottom: 4px; }
+
+  .shortcut-table td:first-child {
+    white-space: nowrap;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--outline-variant);
+    color: var(--on-surface-dim);
+    font-size: 13px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>DarkQuill User Guide</h1>
+<p>Desktop audio transcription — record, transcribe, and export with local AI.</p>
+
+<nav>
+  <p>Contents</p>
+  <ol>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#recording">Recording Audio</a></li>
+    <li><a href="#transcription">Transcription</a></li>
+    <li><a href="#managing-recordings">Managing Recordings</a></li>
+    <li><a href="#managing-transcriptions">Managing Transcriptions</a></li>
+    <li><a href="#export">Exporting</a></li>
+    <li><a href="#whisper-models">Whisper Models</a></li>
+    <li><a href="#audio-settings">Audio Settings</a></li>
+    <li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+    <li><a href="#file-storage">File Storage</a></li>
+    <li><a href="#tips">Tips &amp; Best Practices</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+  </ol>
+</nav>
+
+<!-- 1. Getting Started -->
+<h2 id="getting-started">1. Getting Started</h2>
+
+<p>DarkQuill is a desktop application for capturing short audio recordings and transcribing them locally using OpenAI's Whisper speech-to-text model. Everything runs on your machine — no cloud services, no accounts, no internet required after initial model download.</p>
+
+<h3>First Launch</h3>
+<p>When you first open DarkQuill, two things happen:</p>
+<ul>
+  <li><strong>Project dialog</strong> — You'll be asked to create or select a project. Projects group your recordings and transcriptions by name and date.</li>
+  <li><strong>Model download</strong> — If no Whisper models are found on your system, DarkQuill will prompt you to download them. Two models are downloaded: <code>ggml-base.bin</code> (fast, lower accuracy) and <code>ggml-large-v3-turbo.bin</code> (slower, higher accuracy). The base model is selected by default.</li>
+</ul>
+
+<div class="note">Model downloads happen once. The base model is approximately 142 MB and the large model is approximately 1.6 GB. Both are downloaded from Hugging Face.</div>
+
+<!-- 2. Projects -->
+<h2 id="projects">2. Projects</h2>
+
+<p>Projects are the top-level organizer in DarkQuill. Each project has a name and scopes all recordings and transcriptions under that name, organized by date.</p>
+
+<h3>Creating a Project</h3>
+<p>On the project dialog, type a name in the text field and click <strong>Create</strong>. Project names can contain letters, numbers, spaces, and hyphens. DarkQuill normalizes the name internally (lowercase, spaces become hyphens) for folder and file naming.</p>
+
+<h3>Loading an Existing Project</h3>
+<p>If you've recorded today under an existing project, DarkQuill will list it in the project dialog. Select it and click <strong>Load</strong> (or double-click) to resume where you left off. All recordings and transcriptions for that project will be loaded into the panels.</p>
+
+<h3>Switching Projects</h3>
+<p>Click the <strong>New Session</strong> button in the upper-right corner of the main window to return to the project dialog. You can create a new project or switch to a different one.</p>
+
+<!-- 3. Recording -->
+<h2 id="recording">3. Recording Audio</h2>
+
+<p>The recording control panel sits at the top of the main content area. It contains the record/stop button, a real-time VU meter, and a duration timer.</p>
+
+<h3>How to Record</h3>
+<ul>
+  <li>Click the <strong>Record</strong> button or press <kbd>F9</kbd> to start recording.</li>
+  <li>Speak naturally — DarkQuill is designed for short clips of 2–5 sentences.</li>
+  <li>Click <strong>Stop</strong> or press <kbd>Space</kbd> to finish.</li>
+</ul>
+
+<p>While recording, you'll see the VU meter responding to your voice level and a timer counting elapsed time. Audio is captured at 16 kHz, 16-bit PCM mono — the format Whisper expects.</p>
+
+<div class="tip"><strong>Tip:</strong> The <kbd>Space</kbd> key only stops a recording that's already in progress. It won't interfere with typing in other applications.</div>
+
+<h3>Auto-Stop</h3>
+<p>Recordings automatically stop at 5 minutes. If you need longer audio, break it into multiple clips — this also makes transcription more manageable.</p>
+
+<h3>After Recording</h3>
+<p>Once you stop, the audio is saved as a WAV file and a new entry appears in the <strong>Recordings</strong> panel on the left with a status of <strong>Pending</strong>.</p>
+
+<!-- 4. Transcription -->
+<h2 id="transcription">4. Transcription</h2>
+
+<p>Transcription converts your audio recordings into text using the Whisper AI model running locally on your machine.</p>
+
+<h3>Transcribing a Single Recording</h3>
+<p>Select a recording in the left panel with <strong>Pending</strong> status and click <strong>Transcribe</strong>, or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> to transcribe the most recent pending recording. A status bar will appear showing progress as the Whisper model loads and processes the audio.</p>
+
+<h3>Batch Transcription</h3>
+<p>Select multiple recordings using <kbd>Ctrl</kbd>+Click or <kbd>Shift</kbd>+Click, then click <strong>Transcribe Selected</strong>. Recordings are processed one at a time in sequence. Already-transcribed recordings in the selection are skipped automatically.</p>
+
+<h3>Transcription Status</h3>
+<table>
+  <tr><th>Status</th><th>Meaning</th></tr>
+  <tr><td><strong>Pending</strong></td><td>Recording exists but has not been transcribed yet</td></tr>
+  <tr><td><strong>Transcribing</strong></td><td>Whisper is currently processing this recording</td></tr>
+  <tr><td><strong>Complete</strong></td><td>Transcription finished — text is available in the main panel</td></tr>
+  <tr><td><strong>Failed</strong></td><td>An error occurred — you can retry the transcription</td></tr>
+</table>
+
+<p>Once a recording is marked Complete, its transcription appears in the main panel grouped by date. The recording's status in the left panel changes and its background darkens to visually distinguish it from pending items.</p>
+
+<!-- 5. Managing Recordings -->
+<h2 id="managing-recordings">5. Managing Recordings</h2>
+
+<p>The left panel displays all recordings for the current project, grouped by date. Each date group can be expanded or collapsed by clicking the arrow toggle.</p>
+
+<h3>Selection</h3>
+<p>Click a recording to select it. Use <kbd>Ctrl</kbd>+Click to add individual recordings to your selection, or <kbd>Shift</kbd>+Click to select a range. Selected recordings can be transcribed or deleted as a batch.</p>
+
+<h3>Deleting Recordings</h3>
+<p>Each recording has a delete button (✖) on the right side. You can also delete an entire day's recordings at once using the delete button on the day group header. Deletions are soft-deletes — the files remain on disk but are hidden from the UI. This protects against accidental data loss.</p>
+
+<!-- 6. Managing Transcriptions -->
+<h2 id="managing-transcriptions">6. Managing Transcriptions</h2>
+
+<p>The main content area displays transcriptions grouped by date. Each transcription card shows the recording timestamp, the transcribed text, and action buttons.</p>
+
+<h3>Copying Text</h3>
+<p>Click the <strong>Copy</strong> button on any transcription card to copy its text to your clipboard. This is useful for quickly pasting transcribed content into other applications.</p>
+
+<h3>Deleting Transcriptions</h3>
+<p>Each transcription card has a delete button (✖), and each day group header has a group delete button. Like recordings, transcription deletions are soft-deletes.</p>
+
+<h3>Expanding and Collapsing Groups</h3>
+<p>Click the arrow (▶/▼) on a day group header to expand or collapse that group. This helps manage the view when you have many transcriptions across multiple days.</p>
+
+<!-- 7. Export -->
+<h2 id="export">7. Exporting</h2>
+
+<p>Click the <strong>Export</strong> button in the upper-right corner to save all transcriptions for the current project as a Markdown file. You'll be prompted to choose a save location and filename. The exported file contains all transcriptions ordered chronologically, making it easy to review or share your work.</p>
+
+<div class="tip"><strong>Tip:</strong> The default filename includes your project name — for example, <code>airport-dialogue-study-export.md</code>.</div>
+
+<!-- 8. Whisper Models -->
+<h2 id="whisper-models">8. Whisper Models</h2>
+
+<p>DarkQuill uses Whisper GGML models for speech-to-text. Two models are available out of the box:</p>
+
+<table>
+  <tr><th>Model</th><th>Size</th><th>Speed</th><th>Accuracy</th></tr>
+  <tr><td><code>ggml-base.bin</code></td><td>~142 MB</td><td>Fast</td><td>Good for clear speech</td></tr>
+  <tr><td><code>ggml-large-v3-turbo.bin</code></td><td>~1.6 GB</td><td>Slower</td><td>Best accuracy, handles accents and noise well</td></tr>
+</table>
+
+<h3>Switching Models</h3>
+<p>Click the <strong>Whisper Model</strong> button below the transcription list to open the model selection dialog. Select a model from the dropdown and click <strong>Apply</strong>. The new model will be used for all subsequent transcriptions. DarkQuill loads the model on demand before each transcription batch, so switching is seamless.</p>
+
+<h3>Adding More Models</h3>
+<p>You can place additional Whisper GGML model files (any <code>.bin</code> file) in the models folder. DarkQuill scans this folder for available models. The models folder location is shown in the model selection dialog.</p>
+
+<div class="note">GPU acceleration is available if you have an NVIDIA GPU with CUDA support and the <code>Whisper.net.Runtime.Cuda</code> package. Without it, DarkQuill uses CPU inference, which works well for the base model.</div>
+
+<!-- 9. Audio Settings -->
+<h2 id="audio-settings">9. Audio Settings</h2>
+
+<p>Click the microphone/settings icon on the recording control panel to open Audio Settings. Here you can:</p>
+
+<ul>
+  <li><strong>Select a microphone</strong> — Choose from available audio input devices.</li>
+  <li><strong>Adjust input level</strong> — Use the slider to set the recording input level (0–100).</li>
+  <li><strong>Test your mic</strong> — Click Test to see a live level meter with your selected device before committing.</li>
+</ul>
+
+<p>Your device selection and input level are saved automatically and persist between sessions.</p>
+
+<!-- 10. Keyboard Shortcuts -->
+<h2 id="keyboard-shortcuts">10. Keyboard Shortcuts</h2>
+
+<table class="shortcut-table">
+  <tr><th>Shortcut</th><th>Action</th><th>When Available</th></tr>
+  <tr><td><kbd>F9</kbd></td><td>Start recording</td><td>Project loaded, not currently recording</td></tr>
+  <tr><td><kbd>Space</kbd></td><td>Stop recording</td><td>While recording is active</td></tr>
+  <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd></td><td>Transcribe most recent</td><td>Pending recordings exist</td></tr>
+</table>
+
+<div class="note"><kbd>F9</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> are global hotkeys — they work even when DarkQuill is not in the foreground. <kbd>Space</kbd> is a local shortcut and only works when DarkQuill is focused.</div>
+
+<!-- 11. File Storage -->
+<h2 id="file-storage">11. File Storage</h2>
+
+<p>DarkQuill stores everything as files on your local disk — no database, no cloud. Understanding the folder structure can be helpful for backup or manual cleanup.</p>
+
+<h3>Recordings</h3>
+<div class="card">
+  <code>{recordings-root}/{project-name}-MM-DD-YYYY/</code><br>
+  Example: <code>recordings/airport-study-04-15-2026/airport-study-14-30-45.wav</code>
+</div>
+<p>Each project+date combination gets its own subfolder. WAV files are named with the recording start time.</p>
+
+<h3>Transcriptions</h3>
+<div class="card">
+  <code>{transcriptions-root}/{project-name}-MM-DD-YYYY.json</code><br>
+  Example: <code>transcriptions/airport-study-04-15-2026.json</code>
+</div>
+<p>Each JSON file contains an array of transcription entries for that project and date, including the full text and any speaker segments detected by Whisper.</p>
+
+<h3>Settings</h3>
+<p>Application settings are stored in <code>settings.json</code> in the app data folder. This includes your selected audio device, input level, recordings/transcriptions paths, and selected Whisper model.</p>
+
+<h3>Soft-Delete State</h3>
+<p>When you delete recordings or transcriptions in the UI, they aren't removed from disk. Instead, their IDs are tracked in <code>app-state.json</code>. The original files remain intact for safety.</p>
+
+<!-- 12. Tips -->
+<h2 id="tips">12. Tips &amp; Best Practices</h2>
+
+<ul>
+  <li><strong>Keep clips short.</strong> Whisper works best with clips under 2 minutes. Short clips also transcribe faster and are easier to review.</li>
+  <li><strong>Use a decent microphone.</strong> A USB headset or dedicated microphone produces much cleaner transcriptions than a laptop's built-in mic.</li>
+  <li><strong>Start with the base model.</strong> It's fast and good enough for clear speech in quiet environments. Switch to the large model when you need better accuracy for accented speech, background noise, or technical terminology.</li>
+  <li><strong>Organize by project.</strong> Create a new project for each topic or session. This keeps your recordings grouped logically and makes exports cleaner.</li>
+  <li><strong>Export regularly.</strong> After a recording session, export your transcriptions to Markdown while the context is fresh. You can then edit the exported file as needed.</li>
+  <li><strong>Check the VU meter.</strong> Before a long session, do a quick test recording to make sure your levels are good. The meter should respond clearly to your voice without hitting the top constantly.</li>
+</ul>
+
+<!-- 13. Troubleshooting -->
+<h2 id="troubleshooting">13. Troubleshooting</h2>
+
+<h3>No audio devices found</h3>
+<p>Make sure a microphone is connected and recognized by Windows. Check Windows Sound Settings to verify the device appears as an input device. Then restart DarkQuill.</p>
+
+<h3>Transcription is very slow</h3>
+<p>If you're using the large model on CPU, transcription can take significantly longer than real-time. Consider switching to the base model for faster results, or install the CUDA runtime for GPU acceleration if you have a compatible NVIDIA GPU.</p>
+
+<h3>Empty or garbled transcription</h3>
+<p>This usually means the recording audio is too quiet or too noisy. Open Audio Settings, check your input level, and do a test recording. Make sure you're using the correct microphone.</p>
+
+<h3>Model download failed</h3>
+<p>Model files are downloaded from Hugging Face. If the download fails, check your internet connection and try again. DarkQuill uses temporary files during download, so a failed download won't leave corrupt model files behind.</p>
+
+<h3>Recordings or transcriptions disappeared</h3>
+<p>If items vanished from the UI but you know the files exist, they may have been soft-deleted. Check <code>app-state.json</code> in the app data folder — clearing the deleted IDs list will restore them. Alternatively, the project dialog may have loaded a different project; verify you're in the correct project.</p>
+
+<footer>
+  DarkQuill &mdash; Local audio transcription powered by Whisper
+</footer>
+
+</body>
+</html>

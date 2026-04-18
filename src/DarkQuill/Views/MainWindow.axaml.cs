@@ -34,6 +34,7 @@ public partial class MainWindow : Window
 
         _hotkeyService.HotkeyPressed += OnHotkeyPressed;
         KeyDown += OnKeyDown;
+        HelpButton.Click += OnHelpButtonClick;
     }
 
     /// <summary>
@@ -42,6 +43,15 @@ public partial class MainWindow : Window
     private void OnHotkeyPressed(object? sender, HotkeyEventArgs e)
     {
         WeakReferenceMessenger.Default.Send(new HotkeyPressedMessage(e.Hotkey));
+    }
+
+    /// <summary>
+    /// Opens the user guide help window as a non-modal dialog.
+    /// </summary>
+    private void OnHelpButtonClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow { WindowStartupLocation = WindowStartupLocation.CenterOwner };
+        helpWindow.Show(this);
     }
 
     /// <summary>
