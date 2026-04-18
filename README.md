@@ -20,41 +20,20 @@ DarkQuill is project-based — you create named sessions, record audio clips, tr
 
 ---
 
-# ⚠️ Whisper Model Required — Read This First
+## Whisper Models
 
-**DarkQuill does not include or automatically download AI models.** You must download at least one Whisper GGML model before transcription will work. The **base model is the default** and is required for out-of-the-box functionality.
+On first launch, DarkQuill automatically downloads two Whisper GGML models from Hugging Face. No manual setup required — just launch the app and it handles the rest.
 
-### Quick Start (Download the Base Model)
+| Model | File | Size | Speed | Accuracy |
+|-------|------|------|-------|----------|
+| **Base (default)** | `ggml-base.bin` | ~142 MB | Fast | Good for clear speech in quiet environments |
+| Large v3 Turbo | `ggml-large-v3-turbo.bin` | ~1.6 GB | Slower | Best accuracy — handles accents, background noise, and technical terms well |
 
-**PowerShell (Windows):**
-```powershell
-.\scripts\download-models.ps1
-```
+You can switch between models at any time using the **Whisper Model** button in the transcription panel. Your selection persists across sessions.
 
-**Git Bash (Windows):**
-```bash
-./scripts/download-models.sh
-```
+### Adding More Models
 
-This downloads `ggml-base.bin` (~148 MB) and places it in `%AppData%\DarkQuill\models\`.
-
-### Available Models
-
-| Model | File | Size | Speed | Accuracy | Command |
-|-------|------|------|-------|----------|---------|
-| **Base (default)** | `ggml-base.bin` | ~148 MB | Fast | Good | `.\scripts\download-models.ps1 -Model base` |
-| Large v3 Turbo | `ggml-large-v3-turbo.bin` | ~1.6 GB | Slower | Excellent | `.\scripts\download-models.ps1 -Model turbo` |
-| Both | — | ~1.75 GB | — | — | `.\scripts\download-models.ps1 -Model all` |
-
-For Git Bash, use positional arguments: `./scripts/download-models.sh base`, `./scripts/download-models.sh turbo`, or `./scripts/download-models.sh all`.
-
-### Manual Download
-
-If you prefer to download models manually, grab the GGML `.bin` files from [ggerganov/whisper.cpp on Hugging Face](https://huggingface.co/ggerganov/whisper.cpp) and place them in `%AppData%\DarkQuill\models\`.
-
-### Switching Models
-
-Once downloaded, you can switch between models at runtime using the **Whisper Model** button in the transcription panel. Your selection is saved and persists across sessions.
+Models are stored in `%AppData%\DarkQuill\models\`. You can drop any Whisper GGML-format `.bin` file into this folder and it will appear in the model selector. Compatible models are available from [ggerganov/whisper.cpp on Hugging Face](https://huggingface.co/ggerganov/whisper.cpp) — this includes tiny, small, medium, and distilled variants depending on your speed/accuracy needs.
 
 ---
 
@@ -101,9 +80,6 @@ All cross-ViewModel communication uses `WeakReferenceMessenger`. All I/O is asyn
 # Clone the repo
 git clone https://github.com/yourusername/DarkQuill.git
 cd DarkQuill
-
-# Download the base Whisper model (required)
-.\scripts\download-models.ps1
 
 # Build
 dotnet build
