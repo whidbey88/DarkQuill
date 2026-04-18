@@ -40,6 +40,7 @@ public class DialogService(IProjectService projectService, ISettingsService sett
         var dialog = new Window
         {
             Title = title,
+            Icon = GetAppIcon(),
             Width = 400,
             Height = 200,
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
@@ -70,6 +71,7 @@ public class DialogService(IProjectService projectService, ISettingsService sett
         var dialog = new Window
         {
             Title = title,
+            Icon = GetAppIcon(),
             Width = 400,
             Height = 200,
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
@@ -131,6 +133,19 @@ public class DialogService(IProjectService projectService, ISettingsService sett
     }
 
     /// <inheritdoc />
+    public async Task<bool> ShowModelDownloadAsync(CancellationToken cancellationToken = default)
+    {
+        var owner = GetMainWindow();
+        if (owner is null) return false;
+
+        var viewModel = new ModelDownloadViewModel(_settingsService);
+        var dialog = new ModelDownloadDialog { DataContext = viewModel };
+
+        var result = await dialog.ShowDialog<object?>(owner).ConfigureAwait(true);
+        return result is true;
+    }
+
+    /// <inheritdoc />
     public async Task<string?> ShowSaveFileDialogAsync(string title, string defaultFileName, string filter, CancellationToken cancellationToken = default)
     {
         var owner = GetMainWindow();
@@ -157,6 +172,15 @@ public class DialogService(IProjectService projectService, ISettingsService sett
     private static Window? GetMainWindow()
     {
         return (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+    }
+
+    /// <summary>
+    /// Loads the application icon for use in programmatically created dialog windows.
+    /// Returns the icon from the main window if available, avoiding direct asset loading.
+    /// </summary>
+    private static WindowIcon? GetAppIcon()
+    {
+        return GetMainWindow()?.Icon;
     }
 
     /// <summary>

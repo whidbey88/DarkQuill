@@ -82,6 +82,20 @@ public partial class App : Application
                 // Show the project selection dialog.
                 var dialogService = provider.GetRequiredService<IDialogService>();
                 await dialogService.ShowProjectDialogAsync();
+
+                // Check whether any Whisper models are available. If not, prompt the user to download them.
+                var transcriptionService = provider.GetRequiredService<ITranscriptionService>();
+                var availableModels = await transcriptionService.GetAvailableModelsAsync();
+                if (availableModels.Count == 0)
+                {
+                    var downloaded = await dialogService.ShowModelDownloadAsync();
+                    if (!downloaded)
+                    {
+                        // User cancelled — models are required, so shut down the application.
+                        desktop.Shutdown();
+                        return;
+                    }
+                }
             };
         }
 

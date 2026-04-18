@@ -44,6 +44,13 @@ public interface IDialogService
     Task ShowModelSelectionAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Shows the model download dialog for downloading Whisper GGML models.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>True if models were downloaded successfully, false if the user cancelled.</returns>
+    Task<bool> ShowModelDownloadAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Shows a save file dialog and returns the selected file path.
     /// </summary>
     /// <param name="title">Dialog title.</param>

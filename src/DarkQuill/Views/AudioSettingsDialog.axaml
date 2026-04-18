@@ -5,6 +5,7 @@
         xmlns:models="using:DarkQuill.Models"
         x:Class="DarkQuill.Views.AudioSettingsDialog"
         x:DataType="vm:AudioSettingsViewModel"
+        Icon="/Assets/Icons/darkquill.ico"
         Title="Audio Settings"
         Width="520"
         Height="480"

@@ -3,6 +3,7 @@
         xmlns:vm="using:DarkQuill.ViewModels"
         x:Class="DarkQuill.Views.ProjectDialog"
         x:DataType="vm:ProjectDialogViewModel"
+        Icon="/Assets/Icons/darkquill.ico"
         Title="Project Selection"
         Width="520"
         Height="480"
