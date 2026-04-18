@@ -5,7 +5,7 @@ A Windows desktop app that records short microphone clips and transcribes them l
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![.NET](https://img.shields.io/badge/.NET-8.0-purple)
 ![UI](https://img.shields.io/badge/UI-Avalonia%2011-blueviolet)
-![License](https://img.shields.io/badge/license-MIT-green)
+[![License](https://img.shields.io/badge/license-GPLv3-blue)](LICENSE)
 
 ## What It Does
 
@@ -156,4 +156,6 @@ No data is sent to any external service. Everything stays on your machine.
 
 ## License
 
-MIT
+This project is licensed under the [GNU General Public License v3.0](LICENSE). You're free to use, modify, and distribute it — but any distributed copies or derivative works must also be released under GPLv3 with full source code.
+
+Created by [Ken Smith](mailto:whidbey88@gmail.com)
