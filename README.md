@@ -1,6 +1,6 @@
 # DarkQuill
 
-A desktop audio transcription app that records short microphone clips and transcribes them locally using OpenAI's Whisper — no cloud, no API keys, no subscriptions. Built with C#/.NET 8 and Avalonia UI.
+A Windows desktop app that records short microphone clips and transcribes them locally using OpenAI's Whisper — no cloud, no API keys, no subscriptions. Built with C#/.NET 8 and Avalonia UI.
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![.NET](https://img.shields.io/badge/.NET-8.0-purple)
